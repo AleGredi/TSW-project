@@ -2,3 +2,4 @@
 /bin/
 *.class
 .metadata/
+src/main/webapp/WEB-INF/lib/
