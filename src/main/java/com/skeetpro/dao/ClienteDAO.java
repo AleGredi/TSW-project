@@ -8,4 +8,7 @@ public interface ClienteDAO {
     // Ritorna l'oggetto Cliente se trovato, altrimenti ritorna null.
     Cliente doLogin(String email, String password);
     
+    // Metodo per salvare un nuovo Cliente (o Socio/Temporaneo)
+    boolean save(Cliente cliente);
+    
 }
