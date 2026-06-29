@@ -64,7 +64,7 @@
         </form>
     </div>
 
-    <!-- Semplice script JS (Vanilla) per mostrare/nascondere i campi del Socio -->
+    <!-- Semplice script JS per mostrare/nascondere i campi del Socio -->
     <script>
         function toggleSocioFields() {
             var tipo = document.getElementById("tipoCliente").value;

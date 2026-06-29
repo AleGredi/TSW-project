@@ -39,7 +39,7 @@ public class RegistrazioneServlet extends HttpServlet {
         Cliente nuovoCliente = null;
         String numTessera = null;
 
-        // In base al tipo scelto nel form, instanzio la sottoclasse corretta (Gerarchia disgiunta)
+        // In base al tipo scelto nel form, instanzio la sottoclasse corretta
         if ("Socio".equalsIgnoreCase(tipoCliente)) {
             // Genero in automatico il numero di tessera
             numTessera = "TESS-" + java.util.UUID.randomUUID().toString().substring(0, 8).toUpperCase();
@@ -62,7 +62,7 @@ public class RegistrazioneServlet extends HttpServlet {
             } else {
                 session.setAttribute("successMessage", "Registrazione completata con successo!");
             }
-            // Se la registrazione va a buon fine, reindirizzo al login (PRG Pattern)
+            // Se la registrazione va a buon fine, reindirizzo al login
             response.sendRedirect(request.getContextPath() + "/login");
         } else {
             // Se fallisce (es. CF o Email già presenti nel DB), torno alla JSP mostrando l'errore
