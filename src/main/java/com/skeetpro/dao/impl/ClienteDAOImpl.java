@@ -10,7 +10,7 @@ import com.skeetpro.dao.ClienteDAO;
 import com.skeetpro.model.Cliente;
 import com.skeetpro.model.Socio;
 import com.skeetpro.model.Temporaneo;
-import com.skeetpro.util.DBConnection;
+import com.skeetpro.util.DataSourceProvider;
 
 public class ClienteDAOImpl implements ClienteDAO {
 
@@ -18,15 +18,11 @@ public class ClienteDAOImpl implements ClienteDAO {
     public Cliente doLogin(String email, String password) {
         Cliente cliente = null;
         
-        // Uso rigorosamente il PreparedStatement con i placeholder '?' per evitare la SQL Injection
-        // Uso una LEFT JOIN per prendere anche i dati del Socio (se l'utente è un Socio)
         String query = "SELECT c.*, s.N_Tessera, s.DataIscr FROM Cliente c LEFT JOIN Socio s ON c.CF = s.CF WHERE c.Email = ? AND c.Password = ?";
         
-        // Apre la connessione e prepara lo statement
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = DataSourceProvider.getConnection();
              PreparedStatement ps = conn.prepareStatement(query)) {
              
-            // Sostituiamo i parametri '?' 
             ps.setString(1, email);
             ps.setString(2, password);
             
@@ -69,6 +65,7 @@ public class ClienteDAOImpl implements ClienteDAO {
             
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Errore SQL/DB: " + e.getMessage(), e);
         }
         
         // Ritorna l'oggetto se le credenziali erano giuste, oppure null se la query non ha trovato nulla
@@ -82,7 +79,7 @@ public class ClienteDAOImpl implements ClienteDAO {
         
         Connection conn = null;
         try {
-            conn = DBConnection.getConnection();
+            conn = DataSourceProvider.getConnection();
             // Disabilito l'autocommit per gestire la transazione (Cliente + eventuale Socio)
             conn.setAutoCommit(false);
             

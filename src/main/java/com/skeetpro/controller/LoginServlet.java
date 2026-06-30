@@ -22,34 +22,28 @@ public class LoginServlet extends HttpServlet {
 
     // Il GET serve solo per mostrare la pagina HTML/JSP col form
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Forward alla vista
         request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
     }
 
-    // Il POST serve a ricevere i dati quando l'utente clicca "Accedi"
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Recupero i parametri dal form HTML
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        // Usiamo il DAO per interrogare il vero database
-        ClienteDAO clienteDAO = new ClienteDAOImpl();
-        Cliente utenteLoggato = clienteDAO.doLogin(email, password);
-        
-        if (utenteLoggato != null) {
-            // Login corretto
+        try {
+            com.skeetpro.dao.ClienteDAO clienteDAO = new com.skeetpro.dao.impl.ClienteDAOImpl();
+            Cliente utenteLoggato = clienteDAO.doLogin(email, password);
             
-            // Salvo l'utente nella sessione
-            HttpSession session = request.getSession();
-            session.setAttribute("utente", utenteLoggato);
-            
-            // Pattern PRG: Faccio un REDIRECT alla pagina principale
-            response.sendRedirect(request.getContextPath() + "/home");
-        } else {
-            // Login fallito
-            request.setAttribute("errore", "Credenziali errate! Riprova.");
-            
-            // Faccio FORWARD di nuovo alla pagina di login per mostrare l'errore
+            if (utenteLoggato != null) {
+                HttpSession session = request.getSession();
+                session.setAttribute("utente", utenteLoggato);
+                
+                response.sendRedirect(request.getContextPath() + "/home");
+            } else {
+                request.setAttribute("errore", "Credenziali errate! Riprova.");
+                request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+            }
+        } catch (Exception e) {
+            request.setAttribute("errore", "Eccezione: " + e.getMessage() + " - Cause: " + e.getCause());
             request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
         }
     }
