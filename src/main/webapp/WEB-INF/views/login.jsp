@@ -27,7 +27,7 @@
             <c:remove var="successMessage" scope="session" />
         </c:if>
 
-        <form action="${pageContext.request.contextPath}/login" method="post">
+        <form id="loginForm" action="${pageContext.request.contextPath}/login" method="post">
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="es. mario.rossi@email.it" required>
@@ -41,6 +41,7 @@
             <button type="submit" class="btn-submit">Accedi</button>
         </form>
     </div>
-
+    
+    <script src="${pageContext.request.contextPath}/scripts/validazione.js"></script>
 </body>
 </html>

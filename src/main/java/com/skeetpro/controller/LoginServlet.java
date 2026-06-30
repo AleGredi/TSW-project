@@ -37,6 +37,10 @@ public class LoginServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("utente", utenteLoggato);
                 
+                // Generazione token di sicurezza come da requisiti
+                String csrfToken = java.util.UUID.randomUUID().toString();
+                session.setAttribute("csrfToken", csrfToken);
+                
                 response.sendRedirect(request.getContextPath() + "/home");
             } else {
                 request.setAttribute("errore", "Credenziali errate! Riprova.");

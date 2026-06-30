@@ -16,7 +16,7 @@
             <div class="error-message">${errore}</div>
         </c:if>
 
-        <form action="${pageContext.request.contextPath}/registrazione" method="post">
+        <form id="regForm" action="${pageContext.request.contextPath}/registrazione" method="post">
             <div class="form-group">
                 <label for="tipoCliente">Tipo di Account</label>
                 <!-- JS onchange svela o nasconde i campi extra per il Socio -->
@@ -77,5 +77,6 @@
             }
         }
     </script>
+    <script src="${pageContext.request.contextPath}/scripts/validazione.js"></script>
 </body>
 </html>

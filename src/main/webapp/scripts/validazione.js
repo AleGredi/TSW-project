@@ -1,0 +1,113 @@
+// Funzione per mostrare un errore nel DOM
+function showError(inputElement, message) {
+    let errorDiv = inputElement.nextElementSibling;
+    if (!errorDiv || !errorDiv.classList.contains('input-error')) {
+        errorDiv = document.createElement('div');
+        errorDiv.classList.add('input-error');
+        errorDiv.style.color = '#d93025';
+        errorDiv.style.fontSize = '12px';
+        errorDiv.style.marginTop = '4px';
+        inputElement.parentNode.insertBefore(errorDiv, inputElement.nextSibling);
+    }
+    errorDiv.innerText = message;
+    inputElement.style.borderColor = '#d93025';
+}
+
+// Funzione per rimuovere un errore dal DOM
+function clearError(inputElement) {
+    const errorDiv = inputElement.nextElementSibling;
+    if (errorDiv && errorDiv.classList.contains('input-error')) {
+        errorDiv.remove();
+    }
+    inputElement.style.borderColor = '#ccc';
+}
+
+// Validazione Codice Fiscale (Regex)
+function validateCF(cfInput) {
+    const cf = cfInput.value.trim().toUpperCase();
+    cfInput.value = cf;
+    const regex = /^[A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z]$/;
+    if (!regex.test(cf)) {
+        showError(cfInput, "Codice Fiscale non valido.");
+        return false;
+    }
+    clearError(cfInput);
+    return true;
+}
+
+// Validazione Email (Regex)
+function validateEmail(emailInput) {
+    const email = emailInput.value.trim();
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regex.test(email)) {
+        showError(emailInput, "Formato email non valido.");
+        return false;
+    }
+    clearError(emailInput);
+    return true;
+}
+
+// Validazione campo obbligatorio generico
+function validateRequired(input) {
+    if (input.value.trim() === '') {
+        showError(input, "Questo campo è obbligatorio.");
+        return false;
+    }
+    clearError(input);
+    return true;
+}
+
+// Associa gli eventi change e submit ai form
+document.addEventListener("DOMContentLoaded", function() {
+    
+    // Registrazione
+    const regForm = document.getElementById('regForm');
+    if (regForm) {
+        const cfInput = document.getElementById('cf');
+        const emailInput = document.getElementById('email');
+        const nomeInput = document.getElementById('nome');
+        const cognomeInput = document.getElementById('cognome');
+        const passwordInput = document.getElementById('password');
+
+        // Validazione on change
+        if (cfInput) cfInput.addEventListener('change', () => validateCF(cfInput));
+        if (emailInput) emailInput.addEventListener('change', () => validateEmail(emailInput));
+        if (nomeInput) nomeInput.addEventListener('change', () => validateRequired(nomeInput));
+        if (cognomeInput) cognomeInput.addEventListener('change', () => validateRequired(cognomeInput));
+        if (passwordInput) passwordInput.addEventListener('change', () => validateRequired(passwordInput));
+
+        // Validazione on submit
+        regForm.addEventListener('submit', function(e) {
+            let isValid = true;
+            if (!validateRequired(nomeInput)) isValid = false;
+            if (!validateRequired(cognomeInput)) isValid = false;
+            if (!validateCF(cfInput)) isValid = false;
+            if (!validateEmail(emailInput)) isValid = false;
+            if (!validateRequired(passwordInput)) isValid = false;
+
+            if (!isValid) {
+                e.preventDefault(); // Blocca l'invio al server
+            }
+        });
+    }
+
+    // Login
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+
+        if (emailInput) emailInput.addEventListener('change', () => validateEmail(emailInput));
+        if (passwordInput) passwordInput.addEventListener('change', () => validateRequired(passwordInput));
+
+        loginForm.addEventListener('submit', function(e) {
+            let isValid = true;
+            if (!validateEmail(emailInput)) isValid = false;
+            if (!validateRequired(passwordInput)) isValid = false;
+
+            if (!isValid) {
+                e.preventDefault(); // Blocca l'invio al server
+            }
+        });
+    }
+});
