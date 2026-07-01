@@ -57,10 +57,8 @@ public class ImageRendererServlet extends HttpServlet {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            // In caso di errore ignoriamo e proseguiamo (verrà fatto redirect al placeholder)
         }
         
-        // Se l'immagine non è presente nel DB (null) o non c'è il record, reindirizziamo al placeholder statico
         String placeholder = "arma".equalsIgnoreCase(type) ? "/images/placeholder-gun.png" : "/images/placeholder-ammo.png";
         response.sendRedirect(request.getContextPath() + placeholder);
     }
