@@ -128,4 +128,26 @@ public class ClienteDAOImpl implements ClienteDAO {
             }
         }
     }
+
+    @Override
+    public java.time.LocalDate getPortoArmiScadenza(String cf) {
+        String sql = "SELECT Scadenza FROM PortoArmi WHERE SocioCF = ?";
+        try (Connection con = com.skeetpro.util.DataSourceProvider.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+             
+            ps.setString(1, cf);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    java.sql.Date sqlDate = rs.getDate("Scadenza");
+                    if (sqlDate != null) {
+                        return sqlDate.toLocalDate();
+                    }
+                }
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

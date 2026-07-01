@@ -49,3 +49,25 @@ function rimuoviDalCarrello(idProdotto, tipo) {
     })
     .catch(error => console.error("Errore nella rimozione:", error));
 }
+
+function aggiornaQuantita(idProdotto, tipo, quantitaAttuale, variazione) {
+    let nuovaQuantita = quantitaAttuale + variazione;
+    
+    const formData = new URLSearchParams();
+    formData.append("idProdotto", idProdotto);
+    formData.append("tipo", tipo);
+    formData.append("quantita", nuovaQuantita);
+
+    fetch(window.location.pathname.replace('/carrello', '') + "/carrello/update", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: formData.toString()
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "success") {
+            location.reload(); 
+        }
+    })
+    .catch(error => console.error("Errore nell'aggiornamento:", error));
+}

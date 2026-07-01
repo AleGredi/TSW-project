@@ -1,0 +1,7 @@
+package com.skeetpro.dao;
+
+import com.skeetpro.model.Ordine;
+
+public interface OrdineDAO {
+    void salvaOrdine(Ordine ordine) throws Exception;
+}

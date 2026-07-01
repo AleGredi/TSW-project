@@ -20,9 +20,6 @@ public class Carrello {
         for (RigaCarrello r : righe) {
             if (r.getIdProdotto().equals(nuovaRiga.getIdProdotto()) && r.getTipo().equals(nuovaRiga.getTipo())) {
                 r.setQuantita(r.getQuantita() + nuovaRiga.getQuantita());
-                if(nuovaRiga.getDurata() > 0) {
-                    r.setDurata(r.getDurata() + nuovaRiga.getDurata());
-                }
                 return;
             }
         }

@@ -25,45 +25,54 @@
             </c:when>
             
             <c:otherwise>
-                <table class="cart-table">
-                    <thead>
-                        <tr>
-                            <th>Prodotto</th>
-                            <th>Prezzo Unitario</th>
-                            <th>Quantità</th>
-                            <th>Durata (Ore)</th>
-                            <th>Totale Riga</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="riga" items="${sessionScope.carrello.righe}">
-                            <tr id="riga-${riga.idProdotto}">
-                                <td>
-                                    <span class="product-name">${riga.nome}</span>
-                                    <span class="product-type">${riga.tipo}</span>
-                                </td>
-                                <td>€ <fmt:formatNumber value="${riga.prezzoUnitario}" minFractionDigits="2" /></td>
-                                <td><strong>${riga.quantita}</strong></td>
-                                <td>
-                                    <c:if test="${riga.durata > 0}">⏳ ${riga.durata}</c:if>
-                                    <c:if test="${riga.durata == 0}">-</c:if>
-                                </td>
-                                <td><strong>€ <fmt:formatNumber value="${riga.totaleRiga}" minFractionDigits="2" /></strong></td>
-                                <td style="text-align: right;">
-                                    <button class="btn-remove" onclick="rimuoviDalCarrello('${riga.idProdotto}', '${riga.tipo}')">❌ Rimuovi</button>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-                
-                <div class="cart-summary">
-                    <h3>Totale Ordine: <span id="cart-totale">€ <fmt:formatNumber value="${sessionScope.carrello.totale}" minFractionDigits="2" /></span></h3>
-                    <form action="${pageContext.request.contextPath}/checkout" method="post" style="margin: 0;">
-                        <button type="submit" class="btn-checkout">💳 Procedi al Checkout</button>
-                    </form>
+                <c:if test="${not empty sessionScope.erroreCarrello}">
+                <div class="error-message" style="background-color: var(--color-error); color: white; padding: 10px; border-radius: 8px; margin-bottom: 20px;">
+                    ${sessionScope.erroreCarrello}
                 </div>
+                <c:remove var="erroreCarrello" scope="session" />
+            </c:if>
+
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>Prodotto</th>
+                        <th>Tipo</th>
+                        <th>Quantità</th>
+                        <th>Durata (h)</th>
+                        <th>Prezzo Unitario</th>
+                        <th>Totale</th>
+                        <th>Azione</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="riga" items="${sessionScope.carrello.righe}">
+                        <tr>
+                            <td><strong>${riga.nome}</strong></td>
+                            <td><span class="badge ${riga.tipo.toLowerCase()}">${riga.tipo}</span></td>
+                            <td>
+                                <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                                    <button class="btn-outline" style="padding: 2px 8px; min-width: auto; height: 30px;" onclick="aggiornaQuantita('${riga.idProdotto}', '${riga.tipo}', ${riga.quantita}, -1)">-</button>
+                                    <span style="font-weight: bold; width: 20px; text-align: center;">${riga.quantita}</span>
+                                    <button class="btn-outline" style="padding: 2px 8px; min-width: auto; height: 30px;" onclick="aggiornaQuantita('${riga.idProdotto}', '${riga.tipo}', ${riga.quantita}, 1)">+</button>
+                                </div>
+                            </td>
+                            <td>${riga.durata > 0 ? riga.durata : '-'}</td>
+                            <td>€ <fmt:formatNumber value="${riga.prezzoUnitario}" minFractionDigits="2" /></td>
+                            <td><strong>€ <fmt:formatNumber value="${riga.totaleRiga}" minFractionDigits="2" /></strong></td>
+                            <td>
+                                <button class="btn-remove" onclick="rimuoviDalCarrello('${riga.idProdotto}', '${riga.tipo}')">Rimuovi</button>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+
+            <div class="cart-summary">
+                <h3>Totale Ordine: <span id="cart-totale">€ <fmt:formatNumber value="${sessionScope.carrello.totale}" minFractionDigits="2" /></span></h3>
+                <form action="${pageContext.request.contextPath}/checkout" method="post" style="margin: 0;">
+                    <button type="submit" class="btn-checkout">💳 Procedi al Checkout</button>
+                </form>
+            </div>
             </c:otherwise>
         </c:choose>
     </main>

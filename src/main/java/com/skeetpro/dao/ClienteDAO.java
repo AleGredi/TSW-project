@@ -11,4 +11,6 @@ public interface ClienteDAO {
     // Metodo per salvare un nuovo Cliente (o Socio/Temporaneo)
     boolean save(Cliente cliente);
     
+    // Metodo per recuperare la data di scadenza del porto d'armi (null se inesistente)
+    java.time.LocalDate getPortoArmiScadenza(String cf);
 }

@@ -41,6 +41,20 @@ public class CarrelloServlet extends HttpServlet {
             response.setContentType("application/json");
             response.getWriter().write("{\"status\":\"success\", \"totaleArticoli\":" + carrello.getNumeroArticoli() + "}");
         
+        } else if ("/update".equals(pathInfo)) {
+            String idProdotto = request.getParameter("idProdotto");
+            String tipo = request.getParameter("tipo");
+            int quantita = Integer.parseInt(request.getParameter("quantita"));
+            
+            if (quantita <= 0) {
+                carrello.removeRiga(idProdotto, tipo);
+            } else {
+                carrello.setQuantita(idProdotto, tipo, quantita);
+            }
+            
+            response.setContentType("application/json");
+            response.getWriter().write("{\"status\":\"success\", \"nuovoTotale\":" + carrello.getTotale() + "}");
+        
         } else if ("/remove".equals(pathInfo)) {
             String idProdotto = request.getParameter("idProdotto");
             String tipo = request.getParameter("tipo");

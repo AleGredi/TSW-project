@@ -59,7 +59,7 @@ public class ImageRendererServlet extends HttpServlet {
             e.printStackTrace();
         }
         
-        String placeholder = "arma".equalsIgnoreCase(type) ? "/images/placeholder-gun.png" : "/images/placeholder-ammo.png";
+        String placeholder = "arma".equalsIgnoreCase(type) ? "/images/placeholder-gun.svg" : "/images/placeholder-ammo.svg";
         response.sendRedirect(request.getContextPath() + placeholder);
     }
 }
