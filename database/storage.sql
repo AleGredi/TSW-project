@@ -162,7 +162,7 @@ INSERT INTO Arma VALUES
 INSERT INTO Munizioni VALUES
 ('LOT-C12-24G',  'Cal. 12', 'Fiocchi',       'Cartucce da 24 grammi, piombo 7.5 per Fossa Olimpica.', NULL, 8.50, TRUE),
 ('LOT-C12-28G',  'Cal. 12', 'Baschieri',     'Cartucce da 28 grammi, perfette per lo Sporting e Skeet.', NULL, 9.00, TRUE),
-('LOT-C12-24RC', 'Cal. 12', 'RC Cartridges', 'RC4 Champion Excellence da 24g. Elevata regolaritÃ  di rosata.', NULL, 10.50, TRUE);
+('LOT-C12-24RC', 'Cal. 12', 'RC Cartridges', 'RC4 Champion Excellence da 24g. Elevata regolarità di rosata.', NULL, 10.50, TRUE);
 
 INSERT INTO Dotata VALUES
 ('MAT-001', 'LOT-C12-24G'),
