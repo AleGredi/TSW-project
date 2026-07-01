@@ -1,4 +1,4 @@
-package com.skeetpro.controller;
+package com.skeetpro.control;
 
 import java.io.IOException;
 import jakarta.servlet.ServletException;

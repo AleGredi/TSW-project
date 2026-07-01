@@ -40,29 +40,31 @@
 
         <div class="dashboard-cards">
             <!-- Visibile a tutti -->
-            <div class="card">
+            <a href="${pageContext.request.contextPath}/catalogo" class="card" style="text-decoration:none; color:inherit; display:block;">
                 <h3>Catalogo</h3>
                 <p>Scopri armi e munizioni</p>
-            </div>
-            <div class="card">
-                <h3>Gare</h3>
-                <p>Calendario eventi pubblici</p>
-            </div>
+            </a>
+            
+            <a href="${pageContext.request.contextPath}/campi" class="card" style="text-decoration:none; color:inherit; display:block;">
+                <h3>I Nostri Campi</h3>
+                <p>Esplora le discipline e prenota</p>
+            </a>
+
 
             <!-- Visibile solo agli utenti loggati (Temporaneo o Socio) -->
             <c:if test="${not empty sessionScope.utente}">
-                <div class="card">
+                <a href="${pageContext.request.contextPath}/campi" class="card" style="text-decoration:none; color:inherit; display:block;">
                     <h3>Prenota</h3>
-                    <p>Prenota un campo</p>
-                </div>
+                    <p>Scegli un campo e prenota</p>
+                </a>
             </c:if>
 
             <!-- Visibile solo ai Soci -->
             <c:if test="${ruolo == 'Socio'}">
-                <div class="card">
+                <a href="${pageContext.request.contextPath}/catalogo" class="card" style="text-decoration:none; color:inherit; display:block;">
                     <h3>Armeria</h3>
                     <p>Acquisti e noleggi per Soci</p>
-                </div>
+                </a>
             </c:if>
         </div>
     </div>

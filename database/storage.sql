@@ -35,7 +35,7 @@ CREATE TABLE Admin (
 
 CREATE TABLE Campo (
     ID         INT PRIMARY KEY AUTO_INCREMENT,
-    Disciplina ENUM('Fossa Olimpica', 'Skeet', 'Sporting') NOT NULL
+    Disciplina ENUM('Trap', 'Skeet', 'Sporting') NOT NULL
 );
 
 CREATE TABLE Prenotazione (
@@ -148,11 +148,11 @@ INSERT INTO PortoArmi VALUES
 
 INSERT INTO Campo (Disciplina) VALUES
 ('Skeet'),
-('Fossa Olimpica'),
+('Trap'),
 ('Sporting');
 
 INSERT INTO Arma VALUES
-('MAT-001', 'Beretta DT11 Black Edition', 'Cal. 12', 'Fucile sovrapposto da competizione ideale per la Fossa Olimpica.', NULL, 25.00, TRUE),
+('MAT-001', 'Beretta DT11 Black Edition', 'Cal. 12', 'Fucile sovrapposto da competizione ideale per il Trap.', NULL, 25.00, TRUE),
 ('MAT-002', 'Perazzi High Tech',          'Cal. 12', 'Un classico per i veri tiratori professionisti.', NULL, 20.00, TRUE),
 ('MAT-003', 'Browning B725 Sporter',      'Cal. 12', 'Fucile bilanciato e maneggevole per lo Sporting.', NULL, 15.00, TRUE),
 ('MAT-004', 'Beretta 694 Sporting',       'Cal. 12', 'Ottimo fucile progettato specificamente per il percorso di caccia e lo Sporting.', NULL, 18.00, TRUE),
@@ -160,7 +160,7 @@ INSERT INTO Arma VALUES
 ('MAT-006', 'Fabarm Elos N2 Sporting',    'Cal. 12', 'Fucile maneggevole ed entry-level, ideale per chi si avvicina al tiro a volo.', NULL, 12.00, TRUE);
 
 INSERT INTO Munizioni VALUES
-('LOT-C12-24G',  'Cal. 12', 'Fiocchi',       'Cartucce da 24 grammi, piombo 7.5 per Fossa Olimpica.', NULL, 8.50, TRUE),
+('LOT-C12-24G',  'Cal. 12', 'Fiocchi',       'Cartucce da 24 grammi, piombo 7.5 per il Trap.', NULL, 8.50, TRUE),
 ('LOT-C12-28G',  'Cal. 12', 'Baschieri',     'Cartucce da 28 grammi, perfette per lo Sporting e Skeet.', NULL, 9.00, TRUE),
 ('LOT-C12-24RC', 'Cal. 12', 'RC Cartridges', 'RC4 Champion Excellence da 24g. Elevata regolarità di rosata.', NULL, 10.50, TRUE);
 
