@@ -11,27 +11,20 @@
 </head>
 <body class="home-page">
 
-    <div class="header">
-        <h1>SkeetPro</h1>
-        <div class="nav-links">
-            <c:choose>
-                <c:when test="${not empty sessionScope.utente}">
-                    <a href="${pageContext.request.contextPath}/logout">Logout</a>
-                </c:when>
-                <c:otherwise>
-                    <a href="${pageContext.request.contextPath}/login">Login</a>
-                    <a href="${pageContext.request.contextPath}/registrazione">Registrati</a>
-                </c:otherwise>
-            </c:choose>
-        </div>
-    </div>
+    <jsp:include page="header.jsp" />
 
-    <div class="container">
+    <main class="dashboard">
         <div class="welcome-box">
             <c:choose>
                 <c:when test="${not empty sessionScope.utente}">
-                    <h2>Benvenuto, ${sessionScope.utente.nome} ${sessionScope.utente.cognome}!</h2>
-                    <p>Accesso effettuato come: <strong>${ruolo}</strong></p>
+                    <h2>Benvenuto, ${sessionScope.utente.nome}!</h2>
+                    <p>Il tuo livello di accesso è: <strong>${sessionScope.utente.tipoCliente}</strong></p>
+
+                    <hr style="margin: 20px 0;">
+                    
+                    <h3>La tua Area Personale</h3>
+                    <p>Usa la barra di navigazione in alto per accedere al catalogo, prenotare un campo, o gestire i tuoi noleggi.</p>
+                    
                     <c:if test="${ruolo == 'Socio'}">
                         <p style="color: #0056b3; font-weight: bold; margin-top: 10px;">
                             Numero Tessera Socio: ${sessionScope.utente.numeroTessera}

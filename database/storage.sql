@@ -60,15 +60,23 @@ CREATE TABLE Sessione (
 );
 
 CREATE TABLE Arma (
-    Matricola   VARCHAR(20)  PRIMARY KEY,
-    Modello     VARCHAR(50)  NOT NULL,
-    Immagine    VARCHAR(255) NULL,
-    Disponibile BOOLEAN      NOT NULL DEFAULT TRUE
+    Matricola      VARCHAR(20)  PRIMARY KEY,
+    Modello        VARCHAR(50)  NOT NULL,
+    Calibro        VARCHAR(10)  NOT NULL,
+    Descrizione    TEXT         NULL,
+    Foto           LONGBLOB     NULL,
+    PrezzoNoleggio DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    Attiva         BOOLEAN      NOT NULL DEFAULT TRUE
 );
 
 CREATE TABLE Munizioni (
-    Lotto   VARCHAR(20) PRIMARY KEY,
-    Calibro VARCHAR(10) NOT NULL
+    Lotto       VARCHAR(20) PRIMARY KEY,
+    Calibro     VARCHAR(10) NOT NULL,
+    Marca       VARCHAR(50) NOT NULL,
+    Descrizione TEXT        NULL,
+    Foto        LONGBLOB    NULL,
+    Prezzo      DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    Attiva      BOOLEAN NOT NULL DEFAULT TRUE
 );
 
 CREATE TABLE Dotata (
@@ -81,29 +89,25 @@ CREATE TABLE Dotata (
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-CREATE TABLE Noleggia (
-    ClienteCF     VARCHAR(16) NOT NULL,
-    ArmaMatricola VARCHAR(20) NOT NULL,
-    Data          DATETIME    NOT NULL,
-    Durata        INT         NOT NULL,
-    PRIMARY KEY (ClienteCF, ArmaMatricola, Data),
-    FOREIGN KEY (ClienteCF)     REFERENCES Cliente(CF)
-        ON DELETE RESTRICT ON UPDATE CASCADE,
-    FOREIGN KEY (ArmaMatricola) REFERENCES Arma(Matricola)
+CREATE TABLE Ordine (
+    Codice    INT PRIMARY KEY AUTO_INCREMENT,
+    Data      DATETIME NOT NULL,
+    Stato     ENUM('Da Ritirare', 'Ritirato', 'Annullato') NOT NULL DEFAULT 'Da Ritirare',
+    ClienteCF VARCHAR(16) NOT NULL,
+    FOREIGN KEY (ClienteCF) REFERENCES Cliente(CF)
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-CREATE TABLE Acquista (
-    ClienteCF      VARCHAR(16) NOT NULL,
-    MunizioniLotto VARCHAR(20) NOT NULL,
-    Data           DATETIME    NOT NULL,
-    Quantita       INT         NOT NULL,
-    Stato          ENUM('Da Ritirare', 'Ritirato') NOT NULL DEFAULT 'Da Ritirare',
-    PRIMARY KEY (ClienteCF, MunizioniLotto, Data),
-    FOREIGN KEY (ClienteCF)      REFERENCES Cliente(CF)
-        ON DELETE RESTRICT ON UPDATE CASCADE,
-    FOREIGN KEY (MunizioniLotto) REFERENCES Munizioni(Lotto)
-        ON DELETE RESTRICT ON UPDATE CASCADE
+CREATE TABLE RigaOrdine (
+    OrdineCodice INT NOT NULL,
+    IDProdotto   VARCHAR(20) NOT NULL, -- Matricola Arma, Lotto Munizione o Codice Prenotazione
+    TipoProdotto ENUM('Arma', 'Munizione', 'Sessione') NOT NULL,
+    Prezzo       DECIMAL(10,2) NOT NULL, -- Prezzo congelato al momento dell'acquisto
+    Quantita     INT NOT NULL,
+    Durata       INT NULL, -- Per le ore di noleggio armi
+    PRIMARY KEY (OrdineCodice, IDProdotto, TipoProdotto),
+    FOREIGN KEY (OrdineCodice) REFERENCES Ordine(Codice)
+        ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Gara (
@@ -148,19 +152,28 @@ INSERT INTO Campo (Disciplina) VALUES
 ('Sporting');
 
 INSERT INTO Arma VALUES
-('MAT-001', 'Beretta DT11 Black Edition', NULL, TRUE),
-('MAT-002', 'Perazzi High Tech',          NULL, TRUE),
-('MAT-003', 'Browning B725 Sporter',      NULL, TRUE);
+('MAT-001', 'Beretta DT11 Black Edition', 'Cal. 12', 'Fucile sovrapposto da competizione ideale per la Fossa Olimpica.', NULL, 25.00, TRUE),
+('MAT-002', 'Perazzi High Tech',          'Cal. 12', 'Un classico per i veri tiratori professionisti.', NULL, 20.00, TRUE),
+('MAT-003', 'Browning B725 Sporter',      'Cal. 12', 'Fucile bilanciato e maneggevole per lo Sporting.', NULL, 15.00, TRUE),
+('MAT-004', 'Beretta 694 Sporting',       'Cal. 12', 'Ottimo fucile progettato specificamente per il percorso di caccia e lo Sporting.', NULL, 18.00, TRUE),
+('MAT-005', 'Browning Cynergy',           'Cal. 12', 'Design moderno e bilanciamento perfetto per risultati di alto livello.', NULL, 16.00, TRUE),
+('MAT-006', 'Fabarm Elos N2 Sporting',    'Cal. 12', 'Fucile maneggevole ed entry-level, ideale per chi si avvicina al tiro a volo.', NULL, 12.00, TRUE);
 
 INSERT INTO Munizioni VALUES
-('LOT-C12-24G', 'Cal. 12'),
-('LOT-C12-28G', 'Cal. 12');
+('LOT-C12-24G',  'Cal. 12', 'Fiocchi',       'Cartucce da 24 grammi, piombo 7.5 per Fossa Olimpica.', NULL, 8.50, TRUE),
+('LOT-C12-28G',  'Cal. 12', 'Baschieri',     'Cartucce da 28 grammi, perfette per lo Sporting e Skeet.', NULL, 9.00, TRUE),
+('LOT-C12-24RC', 'Cal. 12', 'RC Cartridges', 'RC4 Champion Excellence da 24g. Elevata regolaritÃ  di rosata.', NULL, 10.50, TRUE);
 
 INSERT INTO Dotata VALUES
 ('MAT-001', 'LOT-C12-24G'),
 ('MAT-001', 'LOT-C12-28G'),
+('MAT-001', 'LOT-C12-24RC'),
 ('MAT-002', 'LOT-C12-24G'),
-('MAT-003', 'LOT-C12-28G');
+('MAT-002', 'LOT-C12-24RC'),
+('MAT-003', 'LOT-C12-28G'),
+('MAT-004', 'LOT-C12-28G'),
+('MAT-005', 'LOT-C12-24G'),
+('MAT-006', 'LOT-C12-28G');
 
 INSERT INTO Prenotazione (Data, FasciaOraria, CampoID, ClienteCF) VALUES
 ('2026-03-01', '10:00:00', 1, 'RSSMRA80A01H501A'),
@@ -174,13 +187,15 @@ INSERT INTO Sessione (Punteggio, PrenotazioneCodice) VALUES
 (75, 3),
 (88, 4);
 
-INSERT INTO Noleggia VALUES
-('RSSMRA80A01H501A', 'MAT-001', '2026-03-01 10:00:00', 120),
-('RSSMRA80A01H501A', 'MAT-002', '2026-03-02 11:00:00', 60);
+INSERT INTO Ordine (Codice, Data, Stato, ClienteCF) VALUES
+(1, '2026-03-01 10:00:00', 'Ritirato', 'RSSMRA80A01H501A'),
+(2, '2026-03-02 11:00:00', 'Da Ritirare', 'RSSMRA80A01H501A');
 
-INSERT INTO Acquista VALUES
-('RSSMRA80A01H501A', 'LOT-C12-24G', '2026-01-01 10:30:00', 250, 'Ritirato'),
-('RSSMRA80A01H501A', 'LOT-C12-28G', '2026-01-05 09:00:00', 50,  'Da Ritirare');
+INSERT INTO RigaOrdine (OrdineCodice, IDProdotto, TipoProdotto, Prezzo, Quantita, Durata) VALUES
+(1, 'MAT-001', 'Arma', 15.00, 1, 2),
+(1, 'LOT-C12-24G', 'Munizione', 8.50, 250, NULL),
+(2, 'MAT-002', 'Arma', 20.00, 1, 1),
+(2, 'LOT-C12-28G', 'Munizione', 9.00, 50, NULL);
 
 INSERT INTO Gara (Data) VALUES
 ('2026-04-10'),
