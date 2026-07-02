@@ -1,4 +1,3 @@
-// Funzione per mostrare un errore nel DOM
 function showError(inputElement, message) {
     let errorDiv = inputElement.nextElementSibling;
     if (!errorDiv || !errorDiv.classList.contains('input-error')) {
@@ -13,7 +12,6 @@ function showError(inputElement, message) {
     inputElement.style.borderColor = '#d93025';
 }
 
-// Funzione per rimuovere un errore dal DOM
 function clearError(inputElement) {
     const errorDiv = inputElement.nextElementSibling;
     if (errorDiv && errorDiv.classList.contains('input-error')) {
@@ -22,7 +20,6 @@ function clearError(inputElement) {
     inputElement.style.borderColor = '#ccc';
 }
 
-// Validazione Codice Fiscale (Regex)
 function validateCF(cfInput) {
     const cf = cfInput.value.trim().toUpperCase();
     cfInput.value = cf;
@@ -35,7 +32,6 @@ function validateCF(cfInput) {
     return true;
 }
 
-// Validazione Email (Regex)
 function validateEmail(emailInput) {
     const email = emailInput.value.trim();
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -47,7 +43,6 @@ function validateEmail(emailInput) {
     return true;
 }
 
-// Validazione campo obbligatorio generico
 function validateRequired(input) {
     if (input.value.trim() === '') {
         showError(input, "Questo campo è obbligatorio.");
@@ -57,10 +52,8 @@ function validateRequired(input) {
     return true;
 }
 
-// Associa gli eventi change e submit ai form
 document.addEventListener("DOMContentLoaded", function() {
     
-    // Registrazione
     const regForm = document.getElementById('regForm');
     if (regForm) {
         const cfInput = document.getElementById('cf');
@@ -69,14 +62,12 @@ document.addEventListener("DOMContentLoaded", function() {
         const cognomeInput = document.getElementById('cognome');
         const passwordInput = document.getElementById('password');
 
-        // Validazione on change
         if (cfInput) cfInput.addEventListener('change', () => validateCF(cfInput));
         if (emailInput) emailInput.addEventListener('change', () => validateEmail(emailInput));
         if (nomeInput) nomeInput.addEventListener('change', () => validateRequired(nomeInput));
         if (cognomeInput) cognomeInput.addEventListener('change', () => validateRequired(cognomeInput));
         if (passwordInput) passwordInput.addEventListener('change', () => validateRequired(passwordInput));
 
-        // Validazione on submit
         regForm.addEventListener('submit', function(e) {
             let isValid = true;
             if (!validateRequired(nomeInput)) isValid = false;
@@ -86,12 +77,11 @@ document.addEventListener("DOMContentLoaded", function() {
             if (!validateRequired(passwordInput)) isValid = false;
 
             if (!isValid) {
-                e.preventDefault(); // Blocca l'invio al server
+                e.preventDefault();
             }
         });
     }
 
-    // Login
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
         const emailInput = document.getElementById('email');
@@ -106,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if (!validateRequired(passwordInput)) isValid = false;
 
             if (!isValid) {
-                e.preventDefault(); // Blocca l'invio al server
+                e.preventDefault();
             }
         });
     }

@@ -5,69 +5,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SkeetPro - Home</title>
-    
+    <title>SkeetPro - Il Tiro a Volo Digitale</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/main.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/home.css">
 </head>
 <body class="home-page">
 
     <jsp:include page="header.jsp" />
 
-    <main class="dashboard">
-        <div class="welcome-box">
-            <c:choose>
-                <c:when test="${not empty sessionScope.utente}">
-                    <h2>Benvenuto, ${sessionScope.utente.nome}!</h2>
-                    <p>Il tuo livello di accesso è: <strong>${sessionScope.utente.tipoCliente}</strong></p>
+    <section class="hero">
+        <c:choose>
+            <c:when test="${not empty sessionScope.utente}">
+                <h1>Bentornato, ${sessionScope.utente.nome}</h1>
+                <p class="hero-subtitle" style="font-family: 'EB Garamond', serif; font-style: italic; font-size: 26px; margin-bottom: 40px; font-weight: 400; color: #d1d8cc;">Esplora il catalogo esclusivo per te che sei <strong style="color:var(--color-accent);">${sessionScope.utente.tipoCliente}</strong>.</p>
+                <div class="hero-buttons">
+                    <a href="${pageContext.request.contextPath}/campi" class="btn-hero">Prenota un Campo</a>
+                    <a href="${pageContext.request.contextPath}/profilo" class="btn-hero-outline">La mia Dashboard</a>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <h1>L'eccellenza nel tiro</h1>
+                <p class="hero-subtitle" style="font-family: 'EB Garamond', serif; font-style: italic; font-size: 26px; margin-bottom: 40px; font-weight: 400;">La tua passione per il tiro a volo, con la qualità di sempre.</p>
+                <div style="margin-top: 30px;">
+                    <a href="${pageContext.request.contextPath}/registrazione" class="btn">Diventa Socio</a>
+                    <a href="${pageContext.request.contextPath}/catalogo" class="btn-outline" style="color: white; border-color: white; margin-left: 15px;">Esplora Catalogo</a>
+                </div>
+            </c:otherwise>
+        </c:choose>
+    </section>
 
-                    <hr style="margin: 20px 0;">
-                    
-                    <h3>La tua Area Personale</h3>
-                    <p>Usa la barra di navigazione in alto per accedere al catalogo, prenotare un campo, o gestire i tuoi noleggi.</p>
-                    
-                    <c:if test="${ruolo == 'Socio'}">
-                        <p style="color: #0056b3; font-weight: bold; margin-top: 10px;">
-                            Numero Tessera Socio: ${sessionScope.utente.numeroTessera}
-                        </p>
-                    </c:if>
-                </c:when>
-                <c:otherwise>
-                    <h2>Benvenuto al circolo di tiro a volo SkeetPro!</h2>
-                    <p>Effettua il login o registrati per prenotare campi, noleggiare armi o acquistare munizioni.</p>
-                </c:otherwise>
-            </c:choose>
-        </div>
-
-        <div class="dashboard-cards">
-            <!-- Visibile a tutti -->
-            <a href="${pageContext.request.contextPath}/catalogo" class="card" style="text-decoration:none; color:inherit; display:block;">
-                <h3>Catalogo</h3>
-                <p>Scopri armi e munizioni</p>
+    <div class="features-container">
+        <div class="features-grid">
+            <a href="${pageContext.request.contextPath}/campi" class="feature-card">
+                <span class="feature-icon">🎯</span>
+                <h3>Campi all'Avanguardia</h3>
+                <p>Strutture moderne per Fossa Olimpica, Skeet e Sporting. Prenota la tua fascia oraria senza attese ed entra subito in pedana.</p>
             </a>
             
-            <a href="${pageContext.request.contextPath}/campi" class="card" style="text-decoration:none; color:inherit; display:block;">
-                <h3>I Nostri Campi</h3>
-                <p>Esplora le discipline e prenota</p>
+            <a href="${pageContext.request.contextPath}/catalogo" class="feature-card">
+                <span class="feature-icon">🔫</span>
+                <h3>Armeria Esclusiva</h3>
+                <p>Un catalogo di armi da noleggiare e munizioni da acquistare, riservato ai nostri Soci con porto d'armi. Sicurezza e altissima qualità.</p>
             </a>
 
-
-            <!-- Visibile solo agli utenti loggati (Temporaneo o Socio) -->
-            <c:if test="${not empty sessionScope.utente}">
-                <a href="${pageContext.request.contextPath}/campi" class="card" style="text-decoration:none; color:inherit; display:block;">
-                    <h3>Prenota</h3>
-                    <p>Scegli un campo e prenota</p>
-                </a>
-            </c:if>
-
-            <!-- Visibile solo ai Soci -->
-            <c:if test="${ruolo == 'Socio'}">
-                <a href="${pageContext.request.contextPath}/catalogo" class="card" style="text-decoration:none; color:inherit; display:block;">
-                    <h3>Armeria</h3>
-                    <p>Acquisti e noleggi per Soci</p>
-                </a>
-            </c:if>
+            <a href="${pageContext.request.contextPath}/profilo" class="feature-card">
+                <span class="feature-icon">📊</span>
+                <h3>Tutto sotto Controllo</h3>
+                <p>La tua dashboard personale per tracciare lo storico delle tue prenotazioni, i tuoi ordini e verificare la validità dei tuoi documenti.</p>
+            </a>
         </div>
     </div>
+
+    <section class="about-section">
+        <h2>Perché scegliere SkeetPro?</h2>
+        <div style="display: flex; justify-content: center; gap: 40px; max-width: 1100px; margin: 40px auto 0; flex-wrap: wrap;">
+            <div class="feature-box" style="flex: 1; min-width: 280px; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                <h4 style="font-size: 20px; margin-bottom: 15px;">🕒 Prenotazioni H24</h4>
+                <p style="font-size: 16px; margin: 0; line-height: 1.6;">Il nostro sistema è sempre online. Assicurati il tuo slot preferito in pedana in qualsiasi momento, senza dover aspettare gli orari di apertura della segreteria.</p>
+            </div>
+            <div class="feature-box" style="flex: 1; min-width: 280px; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                <h4 style="font-size: 20px; margin-bottom: 15px;">🏆 Strutture Professionali</h4>
+                <p style="font-size: 16px; margin: 0; line-height: 1.6;">Campi omologati per Fossa Olimpica e Skeet. Macchine lanciapiattelli di ultima generazione, manutenute con cura per garantirti un'esperienza di tiro perfetta.</p>
+            </div>
+            <div class="feature-box" style="flex: 1; min-width: 280px; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                <h4 style="font-size: 20px; margin-bottom: 15px;">🤝 La Nostra Community</h4>
+                <p style="font-size: 16px; margin: 0; line-height: 1.6;">Unisciti ai nostri Soci! Accedi al noleggio di armi esclusive, partecipa alle gare ufficiali del circolo, scala le classifiche e vivi a pieno la competizione.</p>
+            </div>
+        </div>
+    </section>
 
 </body>
 </html>

@@ -57,13 +57,11 @@ function showToast(message, type = 'success') {
     
     toastContainer.appendChild(toast);
     
-    // Fade in
     setTimeout(() => { 
         toast.style.opacity = '1'; 
         toast.style.transform = 'translateY(0)';
     }, 10);
     
-    // Fade out and remove
     setTimeout(() => {
         toast.style.opacity = '0';
         toast.style.transform = 'translateY(20px)';

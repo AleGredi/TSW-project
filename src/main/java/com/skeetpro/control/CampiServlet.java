@@ -35,22 +35,13 @@ public class CampiServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         
-        // AJAX Check per disponibilità slot
         if ("checkSlot".equals(action)) {
             checkSlotAvailability(request, response);
             return;
         }
 
-        // Mostra i campi
         List<Campo> campi = campoDAO.findAll();
         request.setAttribute("campi", campi);
-        
-        HttpSession session = request.getSession(false);
-        if (session != null && session.getAttribute("utente") != null) {
-            Cliente utente = (Cliente) session.getAttribute("utente");
-            List<Prenotazione> miePrenotazioni = prenotazioneDAO.findByCliente(utente.getCf());
-            request.setAttribute("miePrenotazioni", miePrenotazioni);
-        }
         
         request.getRequestDispatcher("/WEB-INF/views/campi.jsp").forward(request, response);
     }

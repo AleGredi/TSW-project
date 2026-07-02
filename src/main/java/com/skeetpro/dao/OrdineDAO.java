@@ -4,4 +4,5 @@ import com.skeetpro.model.Ordine;
 
 public interface OrdineDAO {
     void salvaOrdine(Ordine ordine) throws Exception;
+    java.util.List<Ordine> getOrdiniByCliente(String cf) throws Exception;
 }

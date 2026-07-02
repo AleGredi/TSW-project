@@ -26,7 +26,6 @@ public class ClienteDAOImpl implements ClienteDAO {
             ps.setString(1, email);
             ps.setString(2, password);
             
-            // Eseguiamo la query
             try (ResultSet rs = ps.executeQuery()) {
                 
                 if (rs.next()) {
@@ -41,7 +40,6 @@ public class ClienteDAOImpl implements ClienteDAO {
                         socio.setPassword(rs.getString("Password"));
                         socio.setTipoCliente(tipoCliente);
                         
-                        // Campi specifici
                         socio.setNumeroTessera(rs.getString("N_Tessera"));
                         Date dataIscr = rs.getDate("DataIscr");
                         if (dataIscr != null) {
@@ -68,7 +66,6 @@ public class ClienteDAOImpl implements ClienteDAO {
             throw new RuntimeException("Errore SQL/DB: " + e.getMessage(), e);
         }
         
-        // Ritorna l'oggetto se le credenziali erano giuste, oppure null se la query non ha trovato nulla
         return cliente;
     }
 
@@ -80,10 +77,8 @@ public class ClienteDAOImpl implements ClienteDAO {
         Connection conn = null;
         try {
             conn = DataSourceProvider.getConnection();
-            // Disabilito l'autocommit per gestire la transazione (Cliente + eventuale Socio)
             conn.setAutoCommit(false);
             
-            // 1. Inserimento nella tabella padre Cliente
             try (PreparedStatement psCliente = conn.prepareStatement(queryCliente)) {
                 psCliente.setString(1, cliente.getCf());
                 psCliente.setString(2, cliente.getNome());
@@ -94,7 +89,6 @@ public class ClienteDAOImpl implements ClienteDAO {
                 psCliente.executeUpdate();
             }
             
-            // 2. Se è un Socio, inserisco anche nella tabella figlia Socio
             if (cliente instanceof Socio) {
                 Socio socio = (Socio) cliente;
                 try (PreparedStatement psSocio = conn.prepareStatement(querySocio)) {
@@ -105,19 +99,16 @@ public class ClienteDAOImpl implements ClienteDAO {
                 }
             }
             
-            // Confermo la transazione
             conn.commit();
             return true;
             
         } catch (SQLException e) {
-            // In caso di errore, annullo tutto
             if (conn != null) {
                 try { conn.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
             }
             e.printStackTrace();
             return false;
         } finally {
-            // Ripristino l'autocommit e chiudo la connessione
             if (conn != null) {
                 try { 
                     conn.setAutoCommit(true); 

@@ -50,7 +50,8 @@ document.addEventListener("DOMContentLoaded", function() {
     dataInput.addEventListener("change", checkSlot);
     orarioSelect.addEventListener("change", checkSlot);
     
-    // Validazione: non permettere di prenotare in date passate
-    const today = new Date().toISOString().split('T')[0];
-    dataInput.setAttribute('min', today);
+    if (dataInput) {
+        const today = new Date().toISOString().split('T')[0];
+        dataInput.setAttribute('min', today);
+    }
 });

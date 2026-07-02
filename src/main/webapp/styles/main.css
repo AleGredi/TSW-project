@@ -2,28 +2,34 @@
    SkeetPro - Foglio di Stile Principale (Tema: Tiro a Volo Elegante)
    ========================================================================= */
 
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
 :root {
-    --color-primary:    #3B4A2F; /* Verde oliva - campi, natura, militare */
-    --color-dark:       #2C2C2C; /* Antracite - sfondi scuri, serietà */
-    --color-accent:     #C45C1A; /* Arancio bruciato - CTA, Acquista, Prenota */
-    --color-accent-lt:  #E87933; /* Arancio più chiaro per gli hover */
-    --color-bg:         #F2EDE4; /* Beige - sfondo pagina, caldo, legno/pelle */
-    --color-surface:    #FAF8F5; /* Superficie più chiara per i box */
-    --color-muted:      #8A8A8A; /* Grigio per testi secondari */
-    --color-error:      #8B1A1A; /* Rosso scuro per errori critici */
-    --color-error-bg:   #F8D7D7; /* Sfondo chiaro per box errori */
-    --color-success:    #2F4A33; /* Verde scuro successo */
-    --color-success-bg: #D4EDDA; /* Sfondo successo */
-    --color-primary-lt: #6B7A5A; /* Verde oliva chiaro per hover/accenti lievi */
+    --color-primary:    #1c1b1a; /* B&P scuro/nero per testate e loghi */
+    --color-dark:       #000101; /* Nero profondo (footer, testi) */
+    --color-accent:     #f15d2a; /* Arancio tipico B&P */
+    --color-accent-lt:  #ff7342; /* Arancio chiaro per hover */
+    --color-bg:         #f6f6f6; /* Grigio molto chiaro usato negli shop */
+    --color-surface:    #ffffff; /* Bianco puro per le schede */
+    --color-muted:      #7a7a7a; /* Grigio neutro per testi secondari */
+    --color-error:      #cf2e2e; /* Rosso scuro per errori */
+    --color-error-bg:   #f8d7d7; /* Sfondo chiaro per box errori */
+    --color-success:    #00d084; /* Verde B&P per successi */
+    --color-success-bg: #e6f9f0; /* Sfondo verde chiaro */
+    --color-primary-lt: #2d2c2a; /* Grigio antracite per hover su elementi scuri */
 }
 
 /* --- GLOBALI --- */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
     background-color: var(--color-bg);
     color: var(--color-dark);
+}
+
+h1, h2, h3, .hero h1 {
+    font-family: 'EB Garamond', serif;
 }
 
 a {
@@ -39,56 +45,65 @@ a:hover {
 /* --- BOTTONI (CTA e Secondari) --- */
 .btn-submit, .btn-checkout {
     width: 100%;
-    padding: 12px 24px;
+    padding: 14px 28px;
     background-color: var(--color-accent);
     color: white;
     border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: bold;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     cursor: pointer;
     margin-top: 10px;
-    box-shadow: 0 4px 6px rgba(196, 92, 26, 0.2);
+    box-shadow: 0 4px 6px rgba(241, 93, 42, 0.2);
     transition: all 0.3s ease;
 }
 
 .btn-submit:hover, .btn-checkout:hover {
     background-color: var(--color-accent-lt);
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(196, 92, 26, 0.3);
+    box-shadow: 0 6px 12px rgba(241, 93, 42, 0.4);
 }
 
 .btn {
     display: inline-block;
-    padding: 10px 20px;
-    background-color: var(--color-primary);
+    padding: 14px 28px;
+    background-color: var(--color-accent);
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     cursor: pointer;
-    font-weight: bold;
     transition: all 0.3s ease;
 }
 
 .btn:hover {
-    background-color: var(--color-primary-lt);
+    background-color: var(--color-accent-lt);
     color: white;
     transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(241, 93, 42, 0.3);
 }
 
 .btn-outline {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 12px 26px;
     background-color: transparent;
-    color: var(--color-primary);
-    border: 2px solid var(--color-primary);
-    border-radius: 6px;
-    font-weight: bold;
+    color: var(--color-dark);
+    border: 2px solid var(--color-dark);
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     transition: all 0.3s ease;
 }
 
 .btn-outline:hover {
-    background-color: var(--color-primary);
+    background-color: var(--color-dark);
     color: white;
     transform: translateY(-2px);
 }
@@ -182,19 +197,14 @@ header h1, .header h1, .cart-header h1 {
     color: var(--color-accent);
 }
 
-/* --- PAGINE DI AUTENTICAZIONE (Login / Registrazione) --- */
-body.auth-page, body.home-page {
-    /* Manteniamo il background di default del sito (var(--color-bg)) */
+/* --- PAGINE DI AUTENTICAZIONE E LAYOUT SPECIALI --- */
+body.auth-page {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     padding: 20px;
     box-sizing: border-box;
-}
-
-body.home-page {
-    display: block; /* La home ha l'header in cima, non deve essere centrata in flex */
 }
 
 .login-box, .reg-box {
@@ -379,4 +389,69 @@ body.home-page {
     font-size: 32px;
 }
 
+/* --- RESPONSIVITÀ (Media Queries) --- */
+@media (max-width: 768px) {
+    /* Header e Navigazione */
+    header, .header, .cart-header {
+        flex-direction: column;
+        padding: 20px 15px;
+        text-align: center;
+    }
+    header h1, .header h1, .cart-header h1 {
+        margin-bottom: 20px;
+        font-size: 28px;
+    }
+    .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+    .nav-links a {
+        margin: 5px 10px;
+        font-size: 14px;
+        padding: 5px;
+        border-bottom: 1px solid transparent;
+    }
 
+    /* Contenitori generici */
+    .home-container, .dashboard, .cart-container, .login-box, .reg-box {
+        margin: 15px auto;
+        padding: 20px 15px;
+        border-radius: 8px;
+    }
+
+    /* Form e Input (Evita lo zoom su iOS) */
+    .form-group input, .form-group select {
+        font-size: 16px; /* iOS Safari non zooma se font-size è 16px */
+        padding: 14px;
+    }
+
+    /* Tabelle carrello (Scroll orizzontale) */
+    .cart-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        border: 0;
+        box-shadow: none;
+    }
+    
+    .cart-summary {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+        padding: 20px 15px;
+    }
+
+    .cart-summary h3 {
+        font-size: 22px;
+    }
+
+    /* Adattamento bottoni */
+    .btn, .btn-submit, .btn-checkout, .btn-outline {
+        width: 100%;
+        margin-top: 15px;
+        box-sizing: border-box;
+        padding: 16px 20px;
+    }
+}

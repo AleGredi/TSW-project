@@ -17,15 +17,12 @@ public class LogoutServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Recupero la sessione corrente, ma passando "false" evito di crearne una nuova se non esiste
         HttpSession session = request.getSession(false);
         
         if (session != null) {
-            // Invalido la sessione: distrugge tutti i dati al suo interno (incluso l'utente loggato)
             session.invalidate();
         }
         
-        // Pattern PRG: faccio un redirect in GET verso la home page
         response.sendRedirect(request.getContextPath() + "/home");
     }
 

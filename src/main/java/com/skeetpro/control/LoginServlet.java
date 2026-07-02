@@ -20,7 +20,6 @@ public class LoginServlet extends HttpServlet {
         super();
     }
 
-    // Il GET serve solo per mostrare la pagina HTML/JSP col form
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
     }
@@ -37,7 +36,6 @@ public class LoginServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("utente", utenteLoggato);
                 
-                // Generazione token di sicurezza come da requisiti
                 String csrfToken = java.util.UUID.randomUUID().toString();
                 session.setAttribute("csrfToken", csrfToken);
                 

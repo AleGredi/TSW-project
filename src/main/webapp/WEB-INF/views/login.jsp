@@ -12,7 +12,7 @@
 <body class="auth-page">
 
     <div class="login-box">
-        <h2>SkeetPro</h2>
+        <h2 style="font-family: 'EB Garamond', serif; text-transform: uppercase;">ACCEDI</h2>
         
         <c:if test="${not empty errore}">
             <div class="error-message">
@@ -20,26 +20,31 @@
             </div>
         </c:if>
         
-        <c:if test="${not empty sessionScope.successMessage}">
+        <c:if test="${not empty successMessage}">
             <div class="success-message">
-                ${sessionScope.successMessage}
+                ${successMessage}
             </div>
-            <c:remove var="successMessage" scope="session" />
         </c:if>
 
-        <form id="loginForm" action="${pageContext.request.contextPath}/login" method="post">
+        <form action="${pageContext.request.contextPath}/login" method="post" id="loginForm">
+            <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
+            
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="es. mario.rossi@email.it" required>
+                <label for="email">EMAIL</label>
+                <input type="email" id="email" name="email" required>
             </div>
             
             <div class="form-group">
-                <label for="password">Password</label>
+                <label for="password">PASSWORD</label>
                 <input type="password" id="password" name="password" required>
             </div>
             
-            <button type="submit" class="btn-submit">Accedi</button>
+            <button type="submit" class="btn-submit">LOGIN</button>
         </form>
+
+        <p style="text-align: center; margin-top: 25px; font-size: 14px;">
+            Non hai un account? <a href="${pageContext.request.contextPath}/registrazione" style="font-weight: bold; text-decoration: underline;">Registrati qui</a>
+        </p>
     </div>
     
     <script src="${pageContext.request.contextPath}/scripts/validazione.js"></script>

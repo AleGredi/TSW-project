@@ -81,4 +81,42 @@ public class OrdineDAOImpl implements OrdineDAO {
             }
         }
     }
+
+    @Override
+    public java.util.List<Ordine> getOrdiniByCliente(String cf) throws Exception {
+        java.util.List<Ordine> ordini = new java.util.ArrayList<>();
+        String sqlOrdine = "SELECT * FROM Ordine WHERE ClienteCF = ? ORDER BY Data DESC";
+        String sqlRiga = "SELECT * FROM RigaOrdine WHERE OrdineCodice = ?";
+
+        try (Connection conn = DataSourceProvider.getConnection();
+             PreparedStatement psOrdine = conn.prepareStatement(sqlOrdine);
+             PreparedStatement psRiga = conn.prepareStatement(sqlRiga)) {
+
+            psOrdine.setString(1, cf);
+            try (ResultSet rsOrdine = psOrdine.executeQuery()) {
+                while (rsOrdine.next()) {
+                    Ordine ordine = new Ordine();
+                    ordine.setCodice(rsOrdine.getInt("Codice"));
+                    ordine.setData(rsOrdine.getTimestamp("Data"));
+                    ordine.setStato(rsOrdine.getString("Stato"));
+                    ordine.setClienteCF(rsOrdine.getString("ClienteCF"));
+
+                    psRiga.setInt(1, ordine.getCodice());
+                    try (ResultSet rsRiga = psRiga.executeQuery()) {
+                        while (rsRiga.next()) {
+                            RigaOrdine ro = new RigaOrdine();
+                            ro.setIdProdotto(rsRiga.getString("IDProdotto"));
+                            ro.setTipoProdotto(rsRiga.getString("TipoProdotto"));
+                            ro.setPrezzo(rsRiga.getDouble("Prezzo"));
+                            ro.setQuantita(rsRiga.getInt("Quantita"));
+                            ro.setDurata(rsRiga.getInt("Durata"));
+                            ordine.addRiga(ro);
+                        }
+                    }
+                    ordini.add(ordine);
+                }
+            }
+        }
+        return ordini;
+    }
 }

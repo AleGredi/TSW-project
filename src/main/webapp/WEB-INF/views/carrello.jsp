@@ -7,7 +7,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Il Tuo Carrello - SkeetPro</title>
-    <!-- Usa un font di sistema pulito ma possiamo simulare eleganza con il CSS vanilla -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/main.css">
 </head>
 <body class="cart-page">
@@ -18,7 +17,7 @@
         <c:choose>
             <c:when test="${empty sessionScope.carrello or empty sessionScope.carrello.righe}">
                 <div class="empty-cart">
-                    <h2>Il tuo carrello è vuoto 💨</h2>
+                    <h2 style="text-transform: uppercase;">Il tuo carrello è vuoto</h2>
                     <p>Sembra che tu non abbia ancora aggiunto nulla per la tua prossima sessione di tiro.</p>
                     <a href="${pageContext.request.contextPath}/home" class="btn-outline">Scopri il Catalogo</a>
                 </div>
@@ -70,7 +69,7 @@
             <div class="cart-summary">
                 <h3>Totale Ordine: <span id="cart-totale">€ <fmt:formatNumber value="${sessionScope.carrello.totale}" minFractionDigits="2" /></span></h3>
                 <form action="${pageContext.request.contextPath}/checkout" method="post" style="margin: 0;">
-                    <button type="submit" class="btn-checkout">💳 Procedi al Checkout</button>
+                    <button type="submit" class="btn-checkout">PROCEDI AL CHECKOUT</button>
                 </form>
             </div>
             </c:otherwise>

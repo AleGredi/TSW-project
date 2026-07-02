@@ -25,18 +25,15 @@ public class CatalogoServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Uso i DAO per recuperare solo gli elementi attivi
         ArmaDAO armaDAO = new ArmaDAOImpl();
         MunizioneDAO munizioneDAO = new MunizioneDAOImpl();
         
         List<Arma> armi = armaDAO.findAllAttive();
         List<Munizione> munizioni = munizioneDAO.findAllAttive();
         
-        // Li passo alla JSP
         request.setAttribute("armi", armi);
         request.setAttribute("munizioni", munizioni);
         
-        // Forward alla view (Nessun controllo token qui, è pubblica)
         request.getRequestDispatcher("/WEB-INF/views/catalogo.jsp").forward(request, response);
     }
 }

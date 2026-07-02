@@ -10,7 +10,7 @@
 </head>
 <body class="auth-page">
     <div class="reg-box">
-        <h2>Registrati su SkeetPro</h2>
+        <h2 style="font-family: 'EB Garamond', serif; text-transform: uppercase;">REGISTRATI</h2>
         
         <c:if test="${not empty errore}">
             <div class="error-message">${errore}</div>
@@ -18,8 +18,7 @@
 
         <form id="regForm" action="${pageContext.request.contextPath}/registrazione" method="post">
             <div class="form-group">
-                <label for="tipoCliente">Tipo di Account</label>
-                <!-- JS onchange svela o nasconde i campi extra per il Socio -->
+                <label for="tipoCliente">TIPO DI ACCOUNT</label>
                 <select id="tipoCliente" name="tipoCliente" onchange="toggleSocioFields()" required>
                     <option value="Temporaneo">Utente Temporaneo</option>
                     <option value="Socio">Socio del Circolo</option>
@@ -27,44 +26,42 @@
             </div>
 
             <div class="form-group">
-                <label for="cf">Codice Fiscale</label>
+                <label for="cf">CODICE FISCALE</label>
                 <input type="text" id="cf" name="cf" maxlength="16" required>
             </div>
 
             <div class="form-group">
-                <label for="nome">Nome</label>
+                <label for="nome">NOME</label>
                 <input type="text" id="nome" name="nome" required>
             </div>
 
             <div class="form-group">
-                <label for="cognome">Cognome</label>
+                <label for="cognome">COGNOME</label>
                 <input type="text" id="cognome" name="cognome" required>
             </div>
 
             <div class="form-group">
-                <label for="email">Email</label>
+                <label for="email">EMAIL</label>
                 <input type="email" id="email" name="email" required>
             </div>
 
             <div class="form-group">
-                <label for="password">Password</label>
+                <label for="password">PASSWORD</label>
                 <input type="password" id="password" name="password" required>
             </div>
 
-            <!-- Campi aggiuntivi visibili SOLO se sceglie "Socio" -->
             <div id="socio-fields" class="socio-fields">
                 <small style="color: #666; display: block; margin-bottom: 10px;">La data d'iscrizione verrà impostata automaticamente a oggi. Il tuo <b>Numero Tessera</b> verrà generato automaticamente e mostrato al termine della registrazione.</small>
             </div>
             
-            <button type="submit" class="btn-submit">Registrati</button>
+            <button type="submit" class="btn-submit">REGISTRATI</button>
             
-            <div style="text-align: center; margin-top: 15px; font-size: 14px;">
-                Hai già un account? <a href="${pageContext.request.contextPath}/login">Accedi qui</a>
+            <div style="text-align: center; margin-top: 25px; font-size: 14px;">
+                Hai già un account? <a href="${pageContext.request.contextPath}/login" style="font-weight: bold; text-decoration: underline;">Accedi qui</a>
             </div>
         </form>
     </div>
 
-    <!-- Semplice script JS per mostrare/nascondere i campi del Socio -->
     <script>
         function toggleSocioFields() {
             var tipo = document.getElementById("tipoCliente").value;
