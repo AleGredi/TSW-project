@@ -9,4 +9,9 @@ public interface ClienteDAO {
     boolean save(Cliente cliente);
     
     java.time.LocalDate getPortoArmiScadenza(String cf);
+    
+    // Metodi per Admin
+    java.util.List<com.skeetpro.model.ClienteAdminDTO> findAllForAdmin();
+    void updateStatoSocio(String cf, String nuovoStato);
+    void updatePortoArmi(String cf, String numLicenza, java.sql.Date scadenza);
 }

@@ -110,21 +110,7 @@ CREATE TABLE RigaOrdine (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE Gara (
-    ID_Gara INT  PRIMARY KEY AUTO_INCREMENT,
-    Data    DATE NOT NULL
-);
 
-CREATE TABLE Partecipa (
-    ClienteCF VARCHAR(16) NOT NULL,
-    GaraID    INT         NOT NULL,
-    Risultato INT         NULL,
-    PRIMARY KEY (ClienteCF, GaraID),
-    FOREIGN KEY (ClienteCF) REFERENCES Cliente(CF)
-        ON DELETE RESTRICT ON UPDATE CASCADE,
-    FOREIGN KEY (GaraID) REFERENCES Gara(ID_Gara)
-        ON DELETE RESTRICT ON UPDATE CASCADE
-);
 
 
 -- -----------------------------------------------
@@ -196,12 +182,4 @@ INSERT INTO RigaOrdine (OrdineCodice, IDProdotto, TipoProdotto, Prezzo, Quantita
 (1, 'LOT-C12-24G', 'Munizione', 8.50, 250, NULL),
 (2, 'MAT-002', 'Arma', 20.00, 1, 1),
 (2, 'LOT-C12-28G', 'Munizione', 9.00, 50, NULL);
-
-INSERT INTO Gara (Data) VALUES
-('2026-04-10'),
-('2026-05-20');
-
-INSERT INTO Partecipa VALUES
-('RSSMRA80A01H501A', 1, 120),
-('BNCGLI90C03H501C', 1, 98),
-('VRDLGU75B02H501B', 2, NULL);
+

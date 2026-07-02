@@ -18,7 +18,7 @@ public class ClienteDAOImpl implements ClienteDAO {
     public Cliente doLogin(String email, String password) {
         Cliente cliente = null;
         
-        String query = "SELECT c.*, s.N_Tessera, s.DataIscr FROM Cliente c LEFT JOIN Socio s ON c.CF = s.CF WHERE c.Email = ? AND c.Password = ?";
+        String query = "SELECT c.*, s.N_Tessera, s.DataIscr, s.Stato FROM Cliente c LEFT JOIN Socio s ON c.CF = s.CF WHERE c.Email = ? AND c.Password = ?";
         
         try (Connection conn = DataSourceProvider.getConnection();
              PreparedStatement ps = conn.prepareStatement(query)) {
@@ -45,6 +45,7 @@ public class ClienteDAOImpl implements ClienteDAO {
                         if (dataIscr != null) {
                             socio.setDataIscrizione(dataIscr.toLocalDate());
                         }
+                        socio.setStato(rs.getString("Stato"));
                         
                         cliente = socio;
                     } else {
@@ -140,5 +141,76 @@ public class ClienteDAOImpl implements ClienteDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public java.util.List<com.skeetpro.model.ClienteAdminDTO> findAllForAdmin() {
+        java.util.List<com.skeetpro.model.ClienteAdminDTO> lista = new java.util.ArrayList<>();
+        String sql = "SELECT c.CF, c.Nome, c.Cognome, c.Email, c.TipoCliente, " +
+                     "s.Stato, s.N_Tessera, p.NumLic, p.Scadenza " +
+                     "FROM Cliente c " +
+                     "LEFT JOIN Socio s ON c.CF = s.CF " +
+                     "LEFT JOIN PortoArmi p ON s.CF = p.SocioCF " +
+                     "ORDER BY c.Cognome, c.Nome";
+                     
+        try (Connection conn = DataSourceProvider.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+             
+            while (rs.next()) {
+                com.skeetpro.model.ClienteAdminDTO dto = new com.skeetpro.model.ClienteAdminDTO();
+                dto.setCf(rs.getString("CF"));
+                dto.setNome(rs.getString("Nome"));
+                dto.setCognome(rs.getString("Cognome"));
+                dto.setEmail(rs.getString("Email"));
+                dto.setTipoCliente(rs.getString("TipoCliente"));
+                
+                dto.setStatoSocio(rs.getString("Stato"));
+                dto.setnTessera(rs.getString("N_Tessera"));
+                
+                dto.setNumLicenza(rs.getString("NumLic"));
+                Date scadenza = rs.getDate("Scadenza");
+                if (scadenza != null) {
+                    dto.setScadenzaPortoArmi(scadenza.toLocalDate());
+                }
+                
+                lista.add(dto);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Errore in findAllForAdmin: " + e.getMessage(), e);
+        }
+        
+        return lista;
+    }
+
+    @Override
+    public void updateStatoSocio(String cf, String nuovoStato) {
+        String sql = "UPDATE Socio SET Stato = ? WHERE CF = ?";
+        try (Connection conn = DataSourceProvider.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, nuovoStato);
+            ps.setString(2, cf);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Errore in updateStatoSocio: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void updatePortoArmi(String cf, String numLicenza, java.sql.Date scadenza) {
+        String sql = "INSERT INTO PortoArmi (NumLic, Scadenza, SocioCF) VALUES (?, ?, ?) " +
+                     "ON DUPLICATE KEY UPDATE NumLic = VALUES(NumLic), Scadenza = VALUES(Scadenza)";
+        try (Connection conn = DataSourceProvider.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, numLicenza);
+            ps.setDate(2, scadenza);
+            ps.setString(3, cf);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Errore in updatePortoArmi: " + e.getMessage(), e);
+        }
     }
 }
