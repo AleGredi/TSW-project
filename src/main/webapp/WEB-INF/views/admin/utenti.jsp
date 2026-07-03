@@ -8,35 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestione Utenti - SkeetPro Admin</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/main.css">
-    <style>
-        .admin-layout { display: flex; min-height: 100vh; }
-        .admin-sidebar { width: 250px; background-color: var(--color-primary); color: white; padding: 20px 0; }
-        .admin-sidebar h2 { text-align: center; color: var(--color-accent); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px; margin-bottom: 20px; }
-        .admin-sidebar ul { list-style: none; padding: 0; margin: 0; }
-        .admin-sidebar ul li a { display: block; padding: 15px 25px; color: white; text-decoration: none; transition: background 0.3s; }
-        .admin-sidebar ul li a:hover, .admin-sidebar ul li a.active { background-color: rgba(255,255,255,0.1); border-left: 4px solid var(--color-accent); }
-        .admin-main { flex: 1; background-color: #f4f7f6; padding: 30px; }
-        .admin-header { display: flex; justify-content: space-between; align-items: center; background: white; padding: 15px 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 30px; }
-        .admin-card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 20px; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background-color: var(--color-surface); color: var(--color-primary); }
-        .status-badge { padding: 5px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; color: white; }
-        .status-active { background-color: #28a745; }
-        .status-suspended { background-color: #ffc107; color: #333; }
-        .status-expired { background-color: #dc3545; }
-        .status-temp { background-color: #17a2b8; }
-        
-        .alert-badge { font-size: 11px; padding: 3px 6px; border-radius: 4px; font-weight: bold; margin-left: 5px; }
-        .alert-warning { background-color: #ffeb3b; color: #b71c1c; border: 1px solid #fbc02d; }
-        .alert-danger { background-color: #f44336; color: white; border: 1px solid #d32f2f; }
-        
-        .action-btn { border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px; color: white; margin-right: 5px; }
-        .btn-suspend { background-color: #ffc107; color: #333; }
-        .btn-activate { background-color: #28a745; }
-    </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/admin.css">
 </head>
-<body style="margin: 0;">
+<body>
 
     <div class="admin-layout">
         <aside class="admin-sidebar">
@@ -75,7 +49,7 @@
 
             <div class="admin-card">
                 <h3>Elenco Clienti Registrati</h3>
-                <table>
+                <table class="admin-table">
                     <thead>
                         <tr>
                             <th>Nome e Cognome</th>

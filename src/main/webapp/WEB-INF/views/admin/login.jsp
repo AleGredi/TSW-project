@@ -7,18 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SkeetPro - Admin Login</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/main.css">
-    <style>
-        body { background-color: #f4f7f6; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-        .admin-login-container { background: #fff; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
-        .admin-login-container h1 { color: var(--color-primary); margin-bottom: 20px; font-size: 24px; }
-        .admin-login-container h1 span { color: var(--color-accent); font-weight: bold; }
-        .admin-login-container input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; box-sizing: border-box; }
-        .admin-login-container button { width: 100%; padding: 12px; background-color: var(--color-accent); color: white; border: none; border-radius: 6px; font-size: 18px; font-weight: bold; cursor: pointer; transition: background 0.3s; }
-        .admin-login-container button:hover { background-color: #e56d25; }
-        .admin-error { background-color: #ffdddd; color: #d8000c; padding: 10px; border-radius: 5px; margin-bottom: 20px; }
-    </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/admin.css">
 </head>
-<body>
+<body class="admin-login-wrapper">
     <div class="admin-login-container">
         <h1>🎯 SkeetPro <span>Admin</span></h1>
         
