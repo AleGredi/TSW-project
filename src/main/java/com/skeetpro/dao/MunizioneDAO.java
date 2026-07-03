@@ -5,4 +5,9 @@ import com.skeetpro.model.Munizione;
 
 public interface MunizioneDAO {
     List<Munizione> findAllAttive();
+    List<Munizione> findAll();
+    void save(Munizione munizione);
+    void update(Munizione munizione);
+    void softDelete(String lotto);
+    void riattiva(String lotto);
 }
