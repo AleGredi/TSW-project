@@ -35,6 +35,27 @@ public class RegistrazioneServlet extends HttpServlet {
         String password = request.getParameter("password");
         String tipoCliente = request.getParameter("tipoCliente");
 
+        if (cf == null || !cf.matches("^[A-Z0-9]{16}$")) {
+            request.setAttribute("errore", "Codice Fiscale non valido.");
+            request.getRequestDispatcher("/WEB-INF/views/registrazione.jsp").forward(request, response);
+            return;
+        }
+        if (nome == null || nome.trim().isEmpty() || cognome == null || cognome.trim().isEmpty()) {
+            request.setAttribute("errore", "Nome e Cognome sono obbligatori.");
+            request.getRequestDispatcher("/WEB-INF/views/registrazione.jsp").forward(request, response);
+            return;
+        }
+        if (email == null || !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            request.setAttribute("errore", "Email non valida.");
+            request.getRequestDispatcher("/WEB-INF/views/registrazione.jsp").forward(request, response);
+            return;
+        }
+        if (password == null || password.length() < 8) {
+            request.setAttribute("errore", "La password deve contenere almeno 8 caratteri.");
+            request.getRequestDispatcher("/WEB-INF/views/registrazione.jsp").forward(request, response);
+            return;
+        }
+
         Cliente nuovoCliente = null;
         String numTessera = null;
 

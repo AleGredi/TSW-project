@@ -55,6 +55,15 @@ public class CampiServlet extends HttpServlet {
 
         Cliente utente = (Cliente) session.getAttribute("utente");
         
+        if (utente instanceof com.skeetpro.model.Socio) {
+            com.skeetpro.model.Socio socio = (com.skeetpro.model.Socio) utente;
+            if ("Sospeso".equalsIgnoreCase(socio.getStato()) || "Scaduto".equalsIgnoreCase(socio.getStato())) {
+                request.setAttribute("errore", "Il tuo account risulta " + socio.getStato() + ". Non puoi effettuare prenotazioni.");
+                doGet(request, response);
+                return;
+            }
+        }
+        
         try {
             int campoId = Integer.parseInt(request.getParameter("campoId"));
             Date data = Date.valueOf(request.getParameter("data"));

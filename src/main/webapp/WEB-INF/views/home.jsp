@@ -13,6 +13,14 @@
 
     <jsp:include page="header.jsp" />
 
+    <main class="dashboard">
+        <c:if test="${not empty sessionScope.successMessage}">
+            <div style="color: #fff; background-color: var(--color-primary); padding: 15px; border-radius: 8px; margin-bottom: 25px; font-weight: bold; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                ${sessionScope.successMessage}
+            </div>
+            <c:remove var="successMessage" scope="session" />
+        </c:if>
+
     <section class="hero">
         <c:choose>
             <c:when test="${not empty sessionScope.utente}">

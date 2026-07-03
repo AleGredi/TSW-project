@@ -81,6 +81,51 @@ public class OrdineDAOImpl implements OrdineDAO {
             }
         }
     }
+    @Override
+    public java.util.List<com.skeetpro.model.OrdineAdminDTO> findAllForAdmin() {
+        java.util.List<com.skeetpro.model.OrdineAdminDTO> ordini = new java.util.ArrayList<>();
+        String sql = "SELECT o.Codice, o.Data, o.Stato, o.ClienteCF, c.Nome, c.Cognome, " +
+                     "SUM(r.Prezzo * r.Quantita * COALESCE(r.Durata, 1)) as Totale " +
+                     "FROM Ordine o " +
+                     "JOIN Cliente c ON o.ClienteCF = c.CF " +
+                     "LEFT JOIN RigaOrdine r ON o.Codice = r.OrdineCodice " +
+                     "GROUP BY o.Codice " +
+                     "ORDER BY o.Data DESC";
+                     
+        try (Connection conn = DataSourceProvider.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+             
+            while (rs.next()) {
+                com.skeetpro.model.OrdineAdminDTO dto = new com.skeetpro.model.OrdineAdminDTO();
+                dto.setCodice(rs.getInt("Codice"));
+                dto.setData(rs.getTimestamp("Data"));
+                dto.setStato(rs.getString("Stato"));
+                dto.setClienteCF(rs.getString("ClienteCF"));
+                dto.setClienteNome(rs.getString("Nome"));
+                dto.setClienteCognome(rs.getString("Cognome"));
+                dto.setTotale(rs.getDouble("Totale"));
+                
+                ordini.add(dto);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ordini;
+    }
+
+    @Override
+    public void updateStato(int codice, String nuovoStato) {
+        String sql = "UPDATE Ordine SET Stato = ? WHERE Codice = ?";
+        try (Connection conn = DataSourceProvider.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, nuovoStato);
+            ps.setInt(2, codice);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public java.util.List<Ordine> getOrdiniByCliente(String cf) throws Exception {

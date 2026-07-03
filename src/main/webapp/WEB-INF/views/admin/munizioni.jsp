@@ -15,7 +15,7 @@
         <aside class="admin-sidebar">
             <h2>🎯 SkeetPro Admin</h2>
             <ul>
-                <li><a href="${pageContext.request.contextPath}/admin/dashboard">📊 Dashboard</a></li>
+
                 <li><a href="${pageContext.request.contextPath}/admin/utenti">👥 Utenti e Soci</a></li>
                 <li><a href="${pageContext.request.contextPath}/admin/armi">🔫 Armi</a></li>
                 <li><a href="${pageContext.request.contextPath}/admin/munizioni" class="active">📦 Munizioni</a></li>

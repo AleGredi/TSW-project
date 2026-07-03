@@ -12,7 +12,7 @@ import com.skeetpro.model.Admin;
 import com.skeetpro.dao.AdminDAO;
 import com.skeetpro.dao.impl.AdminDAOImpl;
 
-@WebServlet("/admin/login")
+@WebServlet({"/admin/login", "/admin"})
 public class AdminLoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private AdminDAO adminDAO;
@@ -26,7 +26,7 @@ public class AdminLoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("admin") != null) {
-            response.sendRedirect(request.getContextPath() + "/admin/dashboard");
+            response.sendRedirect(request.getContextPath() + "/admin/utenti");
             return;
         }
         
@@ -47,7 +47,7 @@ public class AdminLoginServlet extends HttpServlet {
                 String token = java.util.UUID.randomUUID().toString();
                 session.setAttribute("adminCsrfToken", token);
                 
-                response.sendRedirect(request.getContextPath() + "/admin/dashboard");
+                response.sendRedirect(request.getContextPath() + "/admin/utenti");
             } else {
                 request.setAttribute("errore", "Credenziali Admin non valide.");
                 request.getRequestDispatcher("/WEB-INF/views/admin/login.jsp").forward(request, response);

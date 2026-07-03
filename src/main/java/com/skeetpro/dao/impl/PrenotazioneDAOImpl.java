@@ -84,4 +84,48 @@ public class PrenotazioneDAOImpl implements PrenotazioneDAO {
         }
         return list;
     }
+    @Override
+    public java.util.List<com.skeetpro.model.PrenotazioneAdminDTO> findAllForAdmin() {
+        java.util.List<com.skeetpro.model.PrenotazioneAdminDTO> list = new ArrayList<>();
+        String sql = "SELECT p.Codice, p.Data, p.FasciaOraria, p.CampoID, c.Disciplina, " +
+                     "cl.CF, cl.Nome, cl.Cognome " +
+                     "FROM Prenotazione p " +
+                     "JOIN Campo c ON p.CampoID = c.ID " +
+                     "JOIN Cliente cl ON p.ClienteCF = cl.CF " +
+                     "ORDER BY p.Data DESC, p.FasciaOraria DESC";
+                     
+        try (Connection con = DataSourceProvider.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+             
+            while (rs.next()) {
+                com.skeetpro.model.PrenotazioneAdminDTO dto = new com.skeetpro.model.PrenotazioneAdminDTO();
+                dto.setCodice(rs.getInt("Codice"));
+                dto.setData(rs.getDate("Data"));
+                dto.setFasciaOraria(rs.getTime("FasciaOraria"));
+                dto.setCampoId(rs.getInt("CampoID"));
+                dto.setDisciplina(rs.getString("Disciplina"));
+                dto.setClienteCF(rs.getString("CF"));
+                dto.setClienteNome(rs.getString("Nome"));
+                dto.setClienteCognome(rs.getString("Cognome"));
+                
+                list.add(dto);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public void deleteByCodice(String codice) {
+        String sql = "DELETE FROM Prenotazione WHERE Codice = ?";
+        try (Connection con = DataSourceProvider.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, Integer.parseInt(codice));
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

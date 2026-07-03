@@ -33,7 +33,6 @@ public class Socio extends Cliente {
     public void setDataIscrizione(LocalDate dataIscrizione) {
         this.dataIscrizione = dataIscrizione;
     }
-
     public String getStato() {
         return stato;
     }

@@ -9,4 +9,7 @@ public interface PrenotazioneDAO {
     void save(Prenotazione p);
     boolean isSlotAvailable(int campoId, Date data, Time fasciaOraria);
     List<Prenotazione> findByCliente(String clienteCf);
+    
+    java.util.List<com.skeetpro.model.PrenotazioneAdminDTO> findAllForAdmin();
+    void deleteByCodice(String codice);
 }

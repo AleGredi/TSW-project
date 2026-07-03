@@ -71,6 +71,15 @@ public class CheckoutServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
+        
+        if (utente instanceof com.skeetpro.model.Socio) {
+            com.skeetpro.model.Socio socio = (com.skeetpro.model.Socio) utente;
+            if ("Sospeso".equalsIgnoreCase(socio.getStato()) || "Scaduto".equalsIgnoreCase(socio.getStato())) {
+                session.setAttribute("erroreCarrello", "Il tuo account risulta " + socio.getStato() + ". Non puoi effettuare ordini.");
+                response.sendRedirect(request.getContextPath() + "/carrello");
+                return;
+            }
+        }
 
         Carrello carrello = (Carrello) session.getAttribute("carrello");
         if (carrello == null || carrello.getRighe().isEmpty()) {
