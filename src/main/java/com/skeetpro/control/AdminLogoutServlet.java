@@ -15,7 +15,6 @@ public class AdminLogoutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            // Rimuovo solo la sessione dell'admin
             session.removeAttribute("admin");
             session.removeAttribute("adminCsrfToken");
         }

@@ -15,17 +15,25 @@
 .status-badge { padding: 5px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; color: white; }
 .status-active { background-color: #28a745; }
 .status-suspended { background-color: #ffc107; color: #333; }
-.status-expired { background-color: #dc3545; }
+.status-expired, .status-inactive { background-color: #dc3545; }
 .status-temp { background-color: #17a2b8; }
 .alert-badge { font-size: 11px; padding: 3px 6px; border-radius: 4px; font-weight: bold; margin-left: 5px; }
 .alert-warning { background-color: #ffeb3b; color: #b71c1c; border: 1px solid #fbc02d; }
 .alert-danger { background-color: #f44336; color: white; border: 1px solid #d32f2f; }
+
+/* Form Admin */
+.form-row { display: flex; gap: 15px; margin-bottom: 15px; }
+.form-row > div { flex: 1; }
+.form-row label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; color: var(--color-dark); }
+.form-row input, .form-row select, .form-row textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
 
 /* Bottoni Admin */
 .action-btn { border: none; padding: 6px 12px; border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: white; margin-right: 5px; transition: all 0.2s ease; }
 .action-btn:hover { transform: translateY(-2px); }
 .btn-suspend { background-color: #ffc107; color: #333; }
 .btn-activate { background-color: #28a745; }
+.btn-edit { background-color: #ffc107; color: #333; }
+.btn-delete { background-color: #dc3545; }
 
 /* Login Admin */
 .admin-login-wrapper { background-color: var(--color-bg); display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }

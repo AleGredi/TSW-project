@@ -7,33 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestione Armi - SkeetPro Admin</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/main.css">
-    <style>
-        .admin-layout { display: flex; min-height: 100vh; }
-        .admin-sidebar { width: 250px; background-color: var(--color-primary); color: white; padding: 20px 0; }
-        .admin-sidebar h2 { text-align: center; color: var(--color-accent); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px; margin-bottom: 20px; }
-        .admin-sidebar ul { list-style: none; padding: 0; margin: 0; }
-        .admin-sidebar ul li a { display: block; padding: 15px 25px; color: white; text-decoration: none; transition: background 0.3s; }
-        .admin-sidebar ul li a:hover, .admin-sidebar ul li a.active { background-color: rgba(255,255,255,0.1); border-left: 4px solid var(--color-accent); }
-        .admin-main { flex: 1; background-color: #f4f7f6; padding: 30px; }
-        .admin-header { display: flex; justify-content: space-between; align-items: center; background: white; padding: 15px 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 30px; }
-        .admin-card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background-color: var(--color-surface); color: var(--color-primary); }
-        .status-badge { padding: 5px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; color: white; }
-        .status-active { background-color: #28a745; }
-        .status-inactive { background-color: #dc3545; }
-        .action-btn { border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px; color: white; }
-        .btn-edit { background-color: #ffc107; color: #333; }
-        .btn-delete { background-color: #dc3545; }
-        .btn-activate { background-color: #28a745; }
-        .form-row { display: flex; gap: 15px; margin-bottom: 15px; }
-        .form-row > div { flex: 1; }
-        .form-row label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; }
-        .form-row input, .form-row select, .form-row textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-    </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/admin.css">
 </head>
-<body style="margin: 0;">
+<body>
 
     <div class="admin-layout">
         <aside class="admin-sidebar">
@@ -70,7 +46,6 @@
                 <c:remove var="errorMsg" scope="session" />
             </c:if>
 
-            <!-- Modulo Aggiunta/Modifica Arma -->
             <div class="admin-card">
                 <h3>Aggiungi Nuova Arma</h3>
                 <form action="${pageContext.request.contextPath}/admin/armi" method="post">
@@ -92,10 +67,9 @@
                 </form>
             </div>
 
-            <!-- Tabella Armi -->
             <div class="admin-card">
                 <h3>Elenco Armi (Catalogo Noleggio)</h3>
-                <table>
+                <table class="admin-table">
                     <thead>
                         <tr>
                             <th>Matricola</th>
@@ -124,7 +98,6 @@
                                     </c:choose>
                                 </td>
                                 <td style="display: flex; gap: 5px;">
-                                    <!-- Il tasto modifica in futuro potrà aprire un modale, per ora usiamo soft delete -->
                                     <c:choose>
                                         <c:when test="${arma.attiva}">
                                             <form action="${pageContext.request.contextPath}/admin/armi" method="post" style="margin:0;">

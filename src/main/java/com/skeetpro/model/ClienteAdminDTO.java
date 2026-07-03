@@ -9,11 +9,9 @@ public class ClienteAdminDTO {
     private String email;
     private String tipoCliente;
     
-    // Dati Socio
     private String statoSocio;
     private String nTessera;
     
-    // Dati Porto Armi
     private String numLicenza;
     private LocalDate scadenzaPortoArmi;
 
@@ -49,7 +47,6 @@ public class ClienteAdminDTO {
         return scadenzaPortoArmi.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
     
-    // Helper logic per la view
     public boolean isPortoArmiInScadenza() {
         if (scadenzaPortoArmi == null) return false;
         LocalDate oggi = LocalDate.now();

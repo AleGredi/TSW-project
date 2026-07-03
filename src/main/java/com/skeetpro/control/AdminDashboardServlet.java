@@ -17,7 +17,6 @@ public class AdminDashboardServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         
-        // Verifica Sicurezza: Se non c'è la sessione admin, rimbalza al login admin
         if (session == null || session.getAttribute("admin") == null) {
             response.sendRedirect(request.getContextPath() + "/admin/login");
             return;

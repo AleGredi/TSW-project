@@ -49,7 +49,7 @@ public class AdminUtentiServlet extends HttpServlet {
 
         try {
             if ("cambiaStato".equals(action)) {
-                String nuovoStato = request.getParameter("stato"); // 'Attivo' o 'Sospeso' o 'Scaduto'
+                String nuovoStato = request.getParameter("stato");
                 clienteDAO.updateStatoSocio(cf, nuovoStato);
                 session.setAttribute("successMsg", "Stato socio aggiornato con successo!");
             } else if ("aggiornaPortoArmi".equals(action)) {

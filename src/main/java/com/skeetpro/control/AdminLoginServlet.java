@@ -25,7 +25,6 @@ public class AdminLoginServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        // Se c'è già un admin in sessione, mandalo alla dashboard
         if (session != null && session.getAttribute("admin") != null) {
             response.sendRedirect(request.getContextPath() + "/admin/dashboard");
             return;
@@ -45,9 +44,8 @@ public class AdminLoginServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("admin", adminLoggato);
                 
-                // Generazione token CSRF per le azioni dell'admin
-                String csrfToken = java.util.UUID.randomUUID().toString();
-                session.setAttribute("adminCsrfToken", csrfToken);
+                String token = java.util.UUID.randomUUID().toString();
+                session.setAttribute("adminCsrfToken", token);
                 
                 response.sendRedirect(request.getContextPath() + "/admin/dashboard");
             } else {

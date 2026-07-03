@@ -14,13 +14,25 @@ import com.skeetpro.util.DataSourceProvider;
 public class MunizioneDAOImpl implements MunizioneDAO {
 
     @Override
-    public List<Munizione> findAllAttive() {
+    public List<Munizione> findAllAttive(String search) {
         List<Munizione> munizioni = new ArrayList<>();
         String query = "SELECT * FROM Munizioni WHERE Attiva = true";
+        boolean hasSearch = (search != null && !search.trim().isEmpty());
+        
+        if (hasSearch) {
+            query += " AND (LOWER(Marca) LIKE ? OR LOWER(Calibro) LIKE ?)";
+        }
         
         try (Connection conn = DataSourceProvider.getConnection();
-             PreparedStatement ps = conn.prepareStatement(query);
-             ResultSet rs = ps.executeQuery()) {
+             PreparedStatement ps = conn.prepareStatement(query)) {
+             
+            if (hasSearch) {
+                String term = "%" + search.trim().toLowerCase() + "%";
+                ps.setString(1, term);
+                ps.setString(2, term);
+            }
+            
+            try (ResultSet rs = ps.executeQuery()) {
             
             while (rs.next()) {
                 Munizione m = new Munizione();
@@ -31,6 +43,7 @@ public class MunizioneDAOImpl implements MunizioneDAO {
                 m.setPrezzo(rs.getDouble("Prezzo"));
                 m.setAttiva(rs.getBoolean("Attiva"));
                 munizioni.add(m);
+            }
             }
         } catch (SQLException e) {
             e.printStackTrace();

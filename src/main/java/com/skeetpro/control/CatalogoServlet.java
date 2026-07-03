@@ -28,8 +28,10 @@ public class CatalogoServlet extends HttpServlet {
         ArmaDAO armaDAO = new ArmaDAOImpl();
         MunizioneDAO munizioneDAO = new MunizioneDAOImpl();
         
-        List<Arma> armi = armaDAO.findAllAttive();
-        List<Munizione> munizioni = munizioneDAO.findAllAttive();
+        String search = request.getParameter("q");
+        
+        List<Arma> armi = armaDAO.findAllAttive(search);
+        List<Munizione> munizioni = munizioneDAO.findAllAttive(search);
         
         request.setAttribute("armi", armi);
         request.setAttribute("munizioni", munizioni);

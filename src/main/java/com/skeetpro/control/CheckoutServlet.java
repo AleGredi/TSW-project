@@ -32,6 +32,37 @@ public class CheckoutServlet extends HttpServlet {
         this.clienteDAO = new ClienteDAOImpl();
     }
 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Cliente utente = (Cliente) session.getAttribute("utente");
+        
+        if (utente == null) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
+
+        Carrello carrello = (Carrello) session.getAttribute("carrello");
+        if (carrello == null || carrello.getRighe().isEmpty()) {
+            response.sendRedirect(request.getContextPath() + "/carrello");
+            return;
+        }
+
+        java.time.LocalDate scadenza = clienteDAO.getPortoArmiScadenza(utente.getCf());
+        boolean hasValidPortoArmi = scadenza != null && scadenza.isAfter(java.time.LocalDate.now());
+
+        for (RigaCarrello rc : carrello.getRighe()) {
+            if ("Arma".equalsIgnoreCase(rc.getTipo()) || "Munizione".equalsIgnoreCase(rc.getTipo())) {
+                if (!"Socio".equalsIgnoreCase(utente.getTipoCliente()) || !hasValidPortoArmi) {
+                    session.setAttribute("erroreCarrello", "Per noleggiare armi o acquistare munizioni è necessario essere Soci con Porto d'Armi in corso di validità.");
+                    response.sendRedirect(request.getContextPath() + "/carrello");
+                    return;
+                }
+            }
+        }
+
+        request.getRequestDispatcher("/WEB-INF/views/checkout.jsp").forward(request, response);
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Cliente utente = (Cliente) session.getAttribute("utente");

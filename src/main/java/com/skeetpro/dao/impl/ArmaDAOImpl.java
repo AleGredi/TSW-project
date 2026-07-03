@@ -14,13 +14,25 @@ import com.skeetpro.util.DataSourceProvider;
 public class ArmaDAOImpl implements ArmaDAO {
 
     @Override
-    public List<Arma> findAllAttive() {
+    public List<Arma> findAllAttive(String search) {
         List<Arma> armi = new ArrayList<>();
         String query = "SELECT * FROM Arma WHERE Attiva = true";
+        boolean hasSearch = (search != null && !search.trim().isEmpty());
+        
+        if (hasSearch) {
+            query += " AND (LOWER(Modello) LIKE ? OR LOWER(Calibro) LIKE ?)";
+        }
         
         try (Connection conn = DataSourceProvider.getConnection();
-             PreparedStatement ps = conn.prepareStatement(query);
-             ResultSet rs = ps.executeQuery()) {
+             PreparedStatement ps = conn.prepareStatement(query)) {
+             
+            if (hasSearch) {
+                String term = "%" + search.trim().toLowerCase() + "%";
+                ps.setString(1, term);
+                ps.setString(2, term);
+            }
+            
+            try (ResultSet rs = ps.executeQuery()) {
             
             while (rs.next()) {
                 Arma arma = new Arma();
@@ -31,6 +43,7 @@ public class ArmaDAOImpl implements ArmaDAO {
                 arma.setPrezzoNoleggio(rs.getDouble("PrezzoNoleggio"));
                 arma.setAttiva(rs.getBoolean("Attiva"));
                 armi.add(arma);
+            }
             }
         } catch (SQLException e) {
             e.printStackTrace();

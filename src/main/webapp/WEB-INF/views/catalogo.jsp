@@ -16,6 +16,20 @@
 
     <main class="catalogo-container">
         
+        <div class="search-container" style="margin-bottom: 40px; text-align: center; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
+            <h2 style="font-family: 'EB Garamond', serif; text-transform: uppercase; margin-bottom: 20px; font-size: 24px; color: var(--color-primary);">Ricerca nel Catalogo</h2>
+            <form action="${pageContext.request.contextPath}/catalogo" method="get" style="display: flex; width: 100%; max-width: 600px; gap: 10px; margin: 0 auto;">
+                <input type="text" name="q" value="${param.q}" placeholder="Cerca per modello, marca o calibro..." style="flex: 1; padding: 12px 20px; border: 1px solid #ccc; border-radius: 50px; font-size: 16px; outline: none;">
+                <button type="submit" class="btn-submit" style="border-radius: 50px; padding: 12px 30px;">CERCA</button>
+            </form>
+            <c:if test="${not empty param.q}">
+                <div style="margin-top: 20px; font-size: 15px;">
+                    Risultati della ricerca per: <strong>${param.q}</strong> 
+                    <a href="${pageContext.request.contextPath}/catalogo" style="color: var(--color-error); text-decoration: none; margin-left: 15px; font-weight: bold;">[ X Annulla ]</a>
+                </div>
+            </c:if>
+        </div>
+        
         <section class="catalogo-section">
             <h2>ARMI A NOLEGGIO</h2>
             <div class="cards-grid">

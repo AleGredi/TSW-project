@@ -80,7 +80,7 @@
                             </thead>
                             <tbody>
                                 <c:forEach items="${ordine.righe}" var="riga">
-                                    <c:if test="${(tipoStorico == 'noleggi' && riga.tipoProdotto.toLowerCase() == 'arma') || (tipoStorico == 'acquisti' && riga.tipoProdotto.toLowerCase() == 'munizione')}">
+                                    <c:if test="${(tipoStorico == 'noleggi' && (riga.tipoProdotto == 'Arma' || riga.tipoProdotto == 'arma')) || (tipoStorico == 'acquisti' && (riga.tipoProdotto == 'Munizione' || riga.tipoProdotto == 'munizione'))}">
                                         <tr>
                                             <td>
                                                 <strong>${riga.idProdotto}</strong><br>

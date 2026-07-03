@@ -6,6 +6,7 @@ public class Socio extends Cliente {
 
     private String numeroTessera;
     private LocalDate dataIscrizione;
+    private String stato;
 
     public Socio() {
         super();
@@ -31,5 +32,13 @@ public class Socio extends Cliente {
 
     public void setDataIscrizione(LocalDate dataIscrizione) {
         this.dataIscrizione = dataIscrizione;
+    }
+
+    public String getStato() {
+        return stato;
+    }
+
+    public void setStato(String stato) {
+        this.stato = stato;
     }
 }

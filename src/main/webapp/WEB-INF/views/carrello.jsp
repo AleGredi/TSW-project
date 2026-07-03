@@ -68,8 +68,8 @@
 
             <div class="cart-summary">
                 <h3>Totale Ordine: <span id="cart-totale">€ <fmt:formatNumber value="${sessionScope.carrello.totale}" minFractionDigits="2" /></span></h3>
-                <form action="${pageContext.request.contextPath}/checkout" method="post" style="margin: 0;">
-                    <button type="submit" class="btn-checkout">PROCEDI AL CHECKOUT</button>
+                <form action="${pageContext.request.contextPath}/checkout" method="get" style="margin: 0;">
+                    <button type="submit" class="btn-checkout">PROCEDI AL PAGAMENTO</button>
                 </form>
             </div>
             </c:otherwise>
