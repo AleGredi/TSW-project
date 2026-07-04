@@ -27,9 +27,9 @@
                     </c:forEach>
                 </ul>
                 <div class="order-recap-total">
-                    Totale da pagare: <span style="color: var(--color-accent);">€ <fmt:formatNumber value="${sessionScope.carrello.totale}" minFractionDigits="2" /></span>
+                    Totale da pagare: <span class="text-accent-1">€ <fmt:formatNumber value="${sessionScope.carrello.totale}" minFractionDigits="2" /></span>
                 </div>
-                <p style="font-size: 12px; color: var(--color-muted); margin-top: 20px; line-height: 1.5;">
+                <p class="fs-12-text-muted-mt-20-line-height-1-5">
                     <c:set var="haFisico" value="false" />
                     <c:forEach var="r" items="${sessionScope.carrello.righe}">
                         <c:if test="${r.tipo == 'Arma' || r.tipo == 'Munizione'}"><c:set var="haFisico" value="true" /></c:if>
@@ -46,37 +46,33 @@
                 <h2>Dati di Pagamento</h2>
                 
                 <div class="payment-icons">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1200px-Mastercard-logo.svg.png" alt="Mastercard" style="object-fit: contain;">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="Visa" style="object-fit: contain;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1200px-Mastercard-logo.svg.png" alt="Mastercard" class="object-fit-contain">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="Visa" class="object-fit-contain">
                 </div>
 
                 <form action="${pageContext.request.contextPath}/checkout" method="post" id="paymentForm">
                     <div class="form-group">
                         <label for="titolare">Intestatario Carta</label>
                         <input type="text" id="titolare" name="titolare" placeholder="Mario Rossi" required>
-                        <div class="input-error" style="display:none; color: #d93025; font-size: 12px; margin-top: 5px;"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="numeroCarta">Numero Carta</label>
                         <input type="text" id="numeroCarta" name="numeroCarta" placeholder="1234 5678 1234 5678" maxlength="19" required>
-                        <div class="input-error" style="display:none; color: #d93025; font-size: 12px; margin-top: 5px;"></div>
                     </div>
 
                     <div class="input-row">
                         <div class="form-group">
                             <label for="scadenza">Scadenza (MM/AA)</label>
                             <input type="text" id="scadenza" name="scadenza" placeholder="12/26" maxlength="5" required>
-                            <div class="input-error" style="display:none; color: #d93025; font-size: 12px; margin-top: 5px;"></div>
                         </div>
                         <div class="form-group">
                             <label for="cvv">CVV</label>
                             <input type="password" id="cvv" name="cvv" placeholder="123" maxlength="3" required>
-                            <div class="input-error" style="display:none; color: #d93025; font-size: 12px; margin-top: 5px;"></div>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn-submit" style="width: 100%; margin-top: 10px;">PAGA E CONFERMA ORDINE</button>
+                    <button type="submit" class="btn-submit w-100pct-mt-10">PAGA E CONFERMA ORDINE</button>
                 </form>
             </div>
         </div>
@@ -85,6 +81,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('paymentForm');
+            const titolare = document.getElementById('titolare');
             const numCarta = document.getElementById('numeroCarta');
             const scadenza = document.getElementById('scadenza');
             const cvv = document.getElementById('cvv');
@@ -109,14 +106,33 @@
                 e.target.value = e.target.value.replace(/\D/g, '');
             });
 
+            titolare.addEventListener('change', () => validateRequired(titolare));
+            
             form.addEventListener('submit', function(e) {
                 let valid = true;
+
+                if (!validateRequired(titolare)) {
+                    valid = false;
+                }
 
                 if (numCarta.value.replace(/\D/g, '').length < 16) {
                     showError(numCarta, 'Il numero della carta deve contenere 16 cifre.');
                     valid = false;
                 } else {
                     clearError(numCarta);
+                }
+
+                if (scadenza.value.length < 5) {
+                    showError(scadenza, 'Inserisci una data valida (MM/AA).');
+                    valid = false;
+                } else {
+                    const [mese, anno] = scadenza.value.split('/');
+                    if (parseInt(mese) < 1 || parseInt(mese) > 12) {
+                        showError(scadenza, 'Mese non valido (01-12).');
+                        valid = false;
+                    } else {
+                        clearError(scadenza);
+                    }
                 }
                 
                 if (cvv.value.length < 3) {

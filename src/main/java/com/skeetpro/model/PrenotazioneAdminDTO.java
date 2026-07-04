@@ -15,7 +15,6 @@ public class PrenotazioneAdminDTO {
     private String clienteNome;
     private String clienteCognome;
 
-    // Getter e Setter
     public int getCodice() { return codice; }
     public void setCodice(int codice) { this.codice = codice; }
 

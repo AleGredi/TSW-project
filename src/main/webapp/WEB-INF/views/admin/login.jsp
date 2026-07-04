@@ -11,7 +11,7 @@
 </head>
 <body class="admin-login-wrapper">
     <div class="admin-login-container">
-        <h1>🎯 SkeetPro <span>Admin</span></h1>
+        <h1>SkeetPro <span>Admin</span></h1>
         
         <c:if test="${not empty errore}">
             <div class="admin-error">${errore}</div>
@@ -22,7 +22,7 @@
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit">Accedi al Pannello</button>
         </form>
-        <p style="margin-top: 20px; font-size: 14px;"><a href="${pageContext.request.contextPath}/home" style="color: var(--color-primary); text-decoration: none;">Torna al sito principale</a></p>
+        <p class="mt-20-fs-14"><a href="${pageContext.request.contextPath}/home" class="text-primary-text-decoration-none">Torna al sito principale</a></p>
     </div>
 </body>
 </html>

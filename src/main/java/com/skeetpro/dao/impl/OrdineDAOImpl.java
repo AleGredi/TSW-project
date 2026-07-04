@@ -85,7 +85,7 @@ public class OrdineDAOImpl implements OrdineDAO {
     public java.util.List<com.skeetpro.model.OrdineAdminDTO> findAllForAdmin() {
         java.util.List<com.skeetpro.model.OrdineAdminDTO> ordini = new java.util.ArrayList<>();
         String sql = "SELECT o.Codice, o.Data, o.Stato, o.ClienteCF, c.Nome, c.Cognome, " +
-                     "SUM(r.Prezzo * r.Quantita * COALESCE(r.Durata, 1)) as Totale " +
+                     "SUM(r.Prezzo * r.Quantita * COALESCE(NULLIF(r.Durata, 0), 1)) as Totale " +
                      "FROM Ordine o " +
                      "JOIN Cliente c ON o.ClienteCF = c.CF " +
                      "LEFT JOIN RigaOrdine r ON o.Codice = r.OrdineCodice " +

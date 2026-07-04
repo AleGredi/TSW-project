@@ -10,38 +10,38 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/main.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/admin.css">
 </head>
-<body style="margin: 0;">
+<body>
 
     <div class="admin-layout">
         <aside class="admin-sidebar">
-            <h2>🎯 SkeetPro Admin</h2>
+            <h2>SkeetPro Admin</h2>
             <ul>
 
-                <li><a href="${pageContext.request.contextPath}/admin/utenti">👥 Utenti e Soci</a></li>
-                <li><a href="${pageContext.request.contextPath}/admin/armi">🔫 Armi</a></li>
-                <li><a href="${pageContext.request.contextPath}/admin/munizioni">📦 Munizioni</a></li>
-                <li><a href="${pageContext.request.contextPath}/admin/prenotazioni">📅 Prenotazioni</a></li>
-                <li><a href="${pageContext.request.contextPath}/admin/ordini" class="active">📦 Ordini</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/utenti">Utenti e Soci</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/armi">Armi</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/munizioni">Munizioni</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/prenotazioni">Prenotazioni</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/ordini" class="active">Ordini</a></li>
             </ul>
         </aside>
 
         <main class="admin-main">
             <header class="admin-header">
-                <h1 style="margin: 0; color: var(--color-dark); font-size: 24px;">Storico Ordini (Noleggi e Munizioni)</h1>
+                <h1 class="admin-page-title">Storico Ordini (Noleggi e Munizioni)</h1>
                 <div>
-                    <span style="margin-right: 15px; font-weight: bold; color: var(--color-primary);">Benvenuto, ${sessionScope.admin.username}</span>
-                    <a href="${pageContext.request.contextPath}/admin/logout" class="btn-outline" style="padding: 8px 15px; font-size: 14px;">🚪 Logout</a>
+                    <span class="admin-welcome-text">Benvenuto, ${sessionScope.admin.username}</span>
+                    <a href="${pageContext.request.contextPath}/admin/logout" class="btn-outline admin-logout-btn">Logout</a>
                 </div>
             </header>
 
             <c:if test="${not empty sessionScope.successMsg}">
-                <div style="background-color: #d4edda; color: #155724; padding: 15px; border-radius: 4px; margin-bottom: 20px; border: 1px solid #c3e6cb;">
+                <div class="alert-success">
                     ${sessionScope.successMsg}
                 </div>
                 <c:remove var="successMsg" scope="session" />
             </c:if>
             <c:if test="${not empty sessionScope.errorMsg}">
-                <div style="background-color: #f8d7da; color: #721c24; padding: 15px; border-radius: 4px; margin-bottom: 20px; border: 1px solid #f5c6cb;">
+                <div class="alert-error">
                     ${sessionScope.errorMsg}
                 </div>
                 <c:remove var="errorMsg" scope="session" />
@@ -63,10 +63,10 @@
                     <tbody>
                         <c:forEach var="o" items="${ordini}">
                             <tr>
-                                <td><strong style="font-size: 18px;">#${o.codice}</strong></td>
+                                <td><strong class="order-id">#${o.codice}</strong></td>
                                 <td><fmt:formatDate value="${o.data}" pattern="dd/MM/yyyy HH:mm"/></td>
-                                <td>${o.clienteNome} ${o.clienteCognome}<br><span style="font-size: 11px; color: #666; font-family: monospace;">${o.clienteCF}</span></td>
-                                <td style="font-weight: bold; color: var(--color-primary);">
+                                <td>${o.clienteNome} ${o.clienteCognome}<br><span class="text-cf">${o.clienteCF}</span></td>
+                                <td class="text-price">
                                     € <fmt:formatNumber value="${o.totale}" pattern="0.00"/>
                                 </td>
                                 <td>
@@ -84,13 +84,13 @@
                                 </td>
                                 <td>
                                     <c:if test="${o.stato == 'Da Ritirare'}">
-                                        <form action="${pageContext.request.contextPath}/admin/ordini" method="post" style="display:inline;">
+                                        <form action="${pageContext.request.contextPath}/admin/ordini" method="post" class="form-inline-block">
                                             <input type="hidden" name="action" value="cambiaStato">
                                             <input type="hidden" name="codice" value="${o.codice}">
                                             <input type="hidden" name="stato" value="Ritirato">
                                             <button type="submit" class="action-btn btn-activate">Segna Ritirato</button>
                                         </form>
-                                        <form action="${pageContext.request.contextPath}/admin/ordini" method="post" style="display:inline;">
+                                        <form action="${pageContext.request.contextPath}/admin/ordini" method="post" class="form-inline-block">
                                             <input type="hidden" name="action" value="cambiaStato">
                                             <input type="hidden" name="codice" value="${o.codice}">
                                             <input type="hidden" name="stato" value="Annullato">
@@ -102,7 +102,7 @@
                         </c:forEach>
                         <c:if test="${empty ordini}">
                             <tr>
-                                <td colspan="6" style="text-align: center; color: #888;">Nessun ordine trovato nello storico.</td>
+                                <td colspan="6" class="text-empty-table">Nessun ordine trovato nello storico.</td>
                             </tr>
                         </c:if>
                     </tbody>

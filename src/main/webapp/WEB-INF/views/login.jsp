@@ -12,7 +12,7 @@
 <body class="auth-page">
 
     <div class="login-box">
-        <h2 style="font-family: 'EB Garamond', serif; text-transform: uppercase;">ACCEDI</h2>
+        <h2 class="font-family-EB-Garamond-serif-uppercase">ACCEDI</h2>
         
         <c:if test="${not empty errore}">
             <div class="error-message">
@@ -42,8 +42,8 @@
             <button type="submit" class="btn-submit">LOGIN</button>
         </form>
 
-        <p style="text-align: center; margin-top: 25px; font-size: 14px;">
-            Non hai un account? <a href="${pageContext.request.contextPath}/registrazione" style="font-weight: bold; text-decoration: underline;">Registrati qui</a>
+        <p class="text-center-mt-25-fs-14">
+            Non hai un account? <a href="${pageContext.request.contextPath}/registrazione" class="fw-bold-text-decoration-underline">Registrati qui</a>
         </p>
     </div>
     

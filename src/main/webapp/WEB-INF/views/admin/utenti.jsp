@@ -14,34 +14,34 @@
 
     <div class="admin-layout">
         <aside class="admin-sidebar">
-            <h2>🎯 SkeetPro Admin</h2>
+            <h2>SkeetPro Admin</h2>
             <ul>
 
-                <li><a href="${pageContext.request.contextPath}/admin/utenti" class="active">👥 Utenti e Soci</a></li>
-                <li><a href="${pageContext.request.contextPath}/admin/armi">🔫 Armi</a></li>
-                <li><a href="${pageContext.request.contextPath}/admin/munizioni">📦 Munizioni</a></li>
-                <li><a href="${pageContext.request.contextPath}/admin/prenotazioni">📅 Prenotazioni</a></li>
-                <li><a href="${pageContext.request.contextPath}/admin/ordini">📦 Ordini</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/utenti" class="active">Utenti e Soci</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/armi">Armi</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/munizioni">Munizioni</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/prenotazioni">Prenotazioni</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/ordini">Ordini</a></li>
             </ul>
         </aside>
 
         <main class="admin-main">
             <header class="admin-header">
-                <h1 style="margin: 0; color: var(--color-dark); font-size: 24px;">Gestione Utenti e Soci</h1>
+                <h1 class="admin-page-title">Gestione Utenti e Soci</h1>
                 <div>
-                    <span style="margin-right: 15px; font-weight: bold; color: var(--color-primary);">Benvenuto, ${sessionScope.admin.username}</span>
-                    <a href="${pageContext.request.contextPath}/admin/logout" class="btn-outline" style="padding: 8px 15px; font-size: 14px;">🚪 Logout</a>
+                    <span class="admin-welcome-text">Benvenuto, ${sessionScope.admin.username}</span>
+                    <a href="${pageContext.request.contextPath}/admin/logout" class="btn-outline admin-logout-btn">Logout</a>
                 </div>
             </header>
 
             <c:if test="${not empty sessionScope.successMsg}">
-                <div style="background-color: #d4edda; color: #155724; padding: 15px; border-radius: 4px; margin-bottom: 20px; border: 1px solid #c3e6cb;">
+                <div class="alert-success">
                     ${sessionScope.successMsg}
                 </div>
                 <c:remove var="successMsg" scope="session" />
             </c:if>
             <c:if test="${not empty sessionScope.errorMsg}">
-                <div style="background-color: #f8d7da; color: #721c24; padding: 15px; border-radius: 4px; margin-bottom: 20px; border: 1px solid #f5c6cb;">
+                <div class="alert-error">
                     ${sessionScope.errorMsg}
                 </div>
                 <c:remove var="errorMsg" scope="session" />
@@ -65,16 +65,16 @@
                         <c:forEach var="u" items="${utenti}">
                             <tr>
                                 <td><strong>${u.nome} ${u.cognome}</strong></td>
-                                <td style="font-family: monospace;">${u.cf}</td>
+                                <td class="text-monospace">${u.cf}</td>
                                 <td><a href="mailto:${u.email}">${u.email}</a></td>
                                 
                                 <td>
                                     <c:choose>
                                         <c:when test="${u.tipoCliente == 'Socio'}">
-                                            <span style="font-weight: bold; color: var(--color-accent);">Socio</span>
+                                            <span class="fw-bold-text-accent">Socio</span>
                                         </c:when>
                                         <c:otherwise>
-                                            <span style="color: #666;">Temporaneo</span>
+                                            <span class="text-666">Temporaneo</span>
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
@@ -92,7 +92,7 @@
                                                 <span class="status-badge status-expired">SCADUTO</span>
                                             </c:otherwise>
                                         </c:choose>
-                                        <div style="font-size: 11px; margin-top: 4px;">Tessera: ${u.nTessera}</div>
+                                        <div class="fs-11-mt-4">Tessera: ${u.nTessera}</div>
                                     </c:if>
                                     <c:if test="${u.tipoCliente != 'Socio'}">
                                         <span class="status-badge status-temp">N/A</span>
@@ -103,29 +103,29 @@
                                     <c:if test="${u.tipoCliente == 'Socio'}">
                                         <c:if test="${not empty u.numLicenza}">
                                             <strong>${u.numLicenza}</strong> <br>
-                                            Scad: <span style="font-family: monospace;">${u.scadenzaPortoArmiFormatted}</span>
+                                            Scad: <span class="text-monospace">${u.scadenzaPortoArmiFormatted}</span>
                                             
                                             <c:if test="${u.portoArmiScaduto}">
-                                                <br><span class="alert-badge alert-danger" style="margin: 3px 0; display: inline-block;">! SCADUTO !</span>
+                                                <br><span class="alert-badge alert-danger m-3-0-d-inline-block">! SCADUTO !</span>
                                             </c:if>
                                             <c:if test="${u.portoArmiInScadenza}">
-                                                <br><span class="alert-badge alert-warning" style="margin: 3px 0; display: inline-block;">Scade tra meno di 30 gg</span>
+                                                <br><span class="alert-badge alert-warning m-3-0-d-inline-block">Scade tra meno di 30 gg</span>
                                             </c:if>
                                         </c:if>
                                         <c:if test="${empty u.numLicenza}">
-                                            <span style="color: #999; display: block; margin-bottom: 5px;"><i>Nessuna licenza</i></span>
+                                            <span class="text-999-d-block-mb-5"><i>Nessuna licenza</i></span>
                                         </c:if>
                                         
-                                        <form action="${pageContext.request.contextPath}/admin/utenti" method="post" style="margin-top: 8px; display: flex; flex-direction: column; gap: 4px; background: #f9f9f9; padding: 5px; border-radius: 4px; border: 1px solid #ddd;">
+                                        <form action="${pageContext.request.contextPath}/admin/utenti" method="post" class="mt-8-d-flex-flex-direction-column-gap-4-bg-f9f9f9-">
                                             <input type="hidden" name="action" value="aggiornaPortoArmi">
                                             <input type="hidden" name="cf" value="${u.cf}">
-                                            <input type="text" name="numLicenza" placeholder="N. Licenza" value="${u.numLicenza}" style="padding: 4px; font-size: 11px; border: 1px solid #ccc; border-radius: 3px;" required>
-                                            <input type="date" name="scadenza" value="${u.scadenzaPortoArmi}" style="padding: 4px; font-size: 11px; border: 1px solid #ccc; border-radius: 3px;" required>
-                                            <button type="submit" class="action-btn" style="background-color: var(--color-primary); padding: 4px; font-size: 11px; width: 100%;">Salva/Aggiorna</button>
+                                            <input type="text" name="numLicenza" placeholder="N. Licenza" value="${u.numLicenza}" class="p-4-fs-11-border-1-solid-ccc-rounded-3" required>
+                                            <input type="date" name="scadenza" value="${u.scadenzaPortoArmi}" class="p-4-fs-11-border-1-solid-ccc-rounded-3" required>
+                                            <button type="submit" class="action-btn bg-primary-p-4-fs-11-w-100pct">Salva/Aggiorna</button>
                                         </form>
                                     </c:if>
                                     <c:if test="${u.tipoCliente != 'Socio'}">
-                                        <span style="color: #999;"><i>Non applicabile</i></span>
+                                        <span class="text-999"><i>Non applicabile</i></span>
                                     </c:if>
                                 </td>
                                 
@@ -133,7 +133,7 @@
                                     <c:if test="${u.tipoCliente == 'Socio'}">
                                         <c:choose>
                                             <c:when test="${u.statoSocio == 'Attivo'}">
-                                                <form action="${pageContext.request.contextPath}/admin/utenti" method="post" style="display:inline;">
+                                                <form action="${pageContext.request.contextPath}/admin/utenti" method="post" class="form-inline-block">
                                                     <input type="hidden" name="action" value="cambiaStato">
                                                     <input type="hidden" name="cf" value="${u.cf}">
                                                     <input type="hidden" name="stato" value="Sospeso">
@@ -141,7 +141,7 @@
                                                 </form>
                                             </c:when>
                                             <c:otherwise>
-                                                <form action="${pageContext.request.contextPath}/admin/utenti" method="post" style="display:inline;">
+                                                <form action="${pageContext.request.contextPath}/admin/utenti" method="post" class="form-inline-block">
                                                     <input type="hidden" name="action" value="cambiaStato">
                                                     <input type="hidden" name="cf" value="${u.cf}">
                                                     <input type="hidden" name="stato" value="Attivo">

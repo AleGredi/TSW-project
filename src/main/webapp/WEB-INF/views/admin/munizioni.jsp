@@ -13,34 +13,34 @@
 
     <div class="admin-layout">
         <aside class="admin-sidebar">
-            <h2>🎯 SkeetPro Admin</h2>
+            <h2>SkeetPro Admin</h2>
             <ul>
 
-                <li><a href="${pageContext.request.contextPath}/admin/utenti">👥 Utenti e Soci</a></li>
-                <li><a href="${pageContext.request.contextPath}/admin/armi">🔫 Armi</a></li>
-                <li><a href="${pageContext.request.contextPath}/admin/munizioni" class="active">📦 Munizioni</a></li>
-                <li><a href="${pageContext.request.contextPath}/admin/prenotazioni">📅 Prenotazioni</a></li>
-                <li><a href="${pageContext.request.contextPath}/admin/ordini">📦 Ordini</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/utenti">Utenti e Soci</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/armi">Armi</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/munizioni" class="active">Munizioni</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/prenotazioni">Prenotazioni</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/ordini">Ordini</a></li>
             </ul>
         </aside>
 
         <main class="admin-main">
             <header class="admin-header">
-                <h1 style="margin: 0; color: var(--color-dark); font-size: 24px;">Gestione Munizioni</h1>
+                <h1 class="admin-page-title">Gestione Munizioni</h1>
                 <div>
-                    <span style="margin-right: 15px; font-weight: bold; color: var(--color-primary);">Benvenuto, ${sessionScope.admin.username}</span>
-                    <a href="${pageContext.request.contextPath}/admin/logout" class="btn-outline" style="padding: 8px 15px; font-size: 14px;">🚪 Logout</a>
+                    <span class="admin-welcome-text">Benvenuto, ${sessionScope.admin.username}</span>
+                    <a href="${pageContext.request.contextPath}/admin/logout" class="btn-outline admin-logout-btn">Logout</a>
                 </div>
             </header>
 
             <c:if test="${not empty sessionScope.successMsg}">
-                <div style="background-color: #d4edda; color: #155724; padding: 15px; border-radius: 4px; margin-bottom: 20px; border: 1px solid #c3e6cb;">
+                <div class="alert-success">
                     ${sessionScope.successMsg}
                 </div>
                 <c:remove var="successMsg" scope="session" />
             </c:if>
             <c:if test="${not empty sessionScope.errorMsg}">
-                <div style="background-color: #f8d7da; color: #721c24; padding: 15px; border-radius: 4px; margin-bottom: 20px; border: 1px solid #f5c6cb;">
+                <div class="alert-error">
                     ${sessionScope.errorMsg}
                 </div>
                 <c:remove var="errorMsg" scope="session" />
@@ -57,13 +57,13 @@
                     </div>
                     <div class="form-row">
                         <div><label>Prezzo Scatola (€)</label><input type="number" step="0.01" name="prezzo" required></div>
-                        <div style="flex: 2;"><label>Descrizione</label><input type="text" name="descrizione"></div>
-                        <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-                            <input type="checkbox" name="attiva" id="attiva" checked style="width: auto;">
-                            <label for="attiva" style="margin: 0; cursor: pointer;">Attiva nel Catalogo</label>
+                        <div class="form-flex-2"><label>Descrizione</label><input type="text" name="descrizione"></div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" name="attiva" id="attiva" checked class="checkbox-input">
+                            <label for="attiva" class="checkbox-label">Attiva nel Catalogo</label>
                         </div>
                     </div>
-                    <button type="submit" style="background: var(--color-primary); color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold;">Salva Munizione</button>
+                    <button type="submit" class="btn-save">Salva Munizione</button>
                 </form>
             </div>
 
@@ -97,17 +97,17 @@
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
-                                <td style="display: flex; gap: 5px;">
+                                <td class="action-forms-container">
                                     <c:choose>
                                         <c:when test="${m.attiva}">
-                                            <form action="${pageContext.request.contextPath}/admin/munizioni" method="post" style="margin:0;">
+                                            <form action="${pageContext.request.contextPath}/admin/munizioni" method="post" class="form-inline">
                                                 <input type="hidden" name="action" value="delete">
                                                 <input type="hidden" name="lotto" value="${m.lotto}">
                                                 <button type="submit" class="action-btn btn-delete" title="Nascondi (Soft Delete)">Disattiva</button>
                                             </form>
                                         </c:when>
                                         <c:otherwise>
-                                            <form action="${pageContext.request.contextPath}/admin/munizioni" method="post" style="margin:0;">
+                                            <form action="${pageContext.request.contextPath}/admin/munizioni" method="post" class="form-inline">
                                                 <input type="hidden" name="action" value="riattiva">
                                                 <input type="hidden" name="lotto" value="${m.lotto}">
                                                 <button type="submit" class="action-btn btn-activate">Riattiva</button>

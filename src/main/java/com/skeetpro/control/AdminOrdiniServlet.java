@@ -48,7 +48,7 @@ public class AdminOrdiniServlet extends HttpServlet {
         try {
             if ("cambiaStato".equals(action)) {
                 int codice = Integer.parseInt(request.getParameter("codice"));
-                String nuovoStato = request.getParameter("stato"); // 'Da Ritirare', 'Ritirato', 'Annullato'
+                String nuovoStato = request.getParameter("stato");
                 ordineDAO.updateStato(codice, nuovoStato);
                 session.setAttribute("successMsg", "Stato dell'ordine aggiornato con successo!");
             }
