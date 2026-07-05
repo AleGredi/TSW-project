@@ -22,7 +22,7 @@
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit">Accedi al Pannello</button>
         </form>
-        <p class="mt-20-fs-14"><a href="${pageContext.request.contextPath}/home" class="text-primary-text-decoration-none">Torna al sito principale</a></p>
+        <p class="text-small-centered-61"><a href="${pageContext.request.contextPath}/home" class="highlight-text-62">Torna al sito principale</a></p>
     </div>
 </body>
 </html>

@@ -41,7 +41,7 @@
                 <c:remove var="successMsg" scope="session" />
             </c:if>
             <c:if test="${not empty sessionScope.errorMsg}">
-                <div class="alert-error">
+                <div class="custom-element-14">
                     ${sessionScope.errorMsg}
                 </div>
                 <c:remove var="errorMsg" scope="session" />
@@ -71,10 +71,10 @@
                                 <td>
                                     <c:choose>
                                         <c:when test="${u.tipoCliente == 'Socio'}">
-                                            <span class="fw-bold-text-accent">Socio</span>
+                                            <span class="custom-element-48-highlight-text-2">Socio</span>
                                         </c:when>
                                         <c:otherwise>
-                                            <span class="text-666">Temporaneo</span>
+                                            <span class="highlight-text-64">Temporaneo</span>
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
@@ -83,19 +83,19 @@
                                     <c:if test="${u.tipoCliente == 'Socio'}">
                                         <c:choose>
                                             <c:when test="${u.statoSocio == 'Attivo'}">
-                                                <span class="status-badge status-active">ATTIVO</span>
+                                                <span class="custom-element-59 status-active">ATTIVO</span>
                                             </c:when>
                                             <c:when test="${u.statoSocio == 'Sospeso'}">
-                                                <span class="status-badge status-suspended">SOSPESO</span>
+                                                <span class="custom-element-59 status-suspended">SOSPESO</span>
                                             </c:when>
                                             <c:otherwise>
-                                                <span class="status-badge status-expired">SCADUTO</span>
+                                                <span class="custom-element-59 status-expired">SCADUTO</span>
                                             </c:otherwise>
                                         </c:choose>
-                                        <div class="fs-11-mt-4">Tessera: ${u.nTessera}</div>
+                                        <div class="fs-11-spacing-element-40">Tessera: ${u.nTessera}</div>
                                     </c:if>
                                     <c:if test="${u.tipoCliente != 'Socio'}">
-                                        <span class="status-badge status-temp">N/A</span>
+                                        <span class="custom-element-59 status-temp">N/A</span>
                                     </c:if>
                                 </td>
                                 
@@ -106,26 +106,26 @@
                                             Scad: <span class="text-monospace">${u.scadenzaPortoArmiFormatted}</span>
                                             
                                             <c:if test="${u.portoArmiScaduto}">
-                                                <br><span class="alert-badge alert-danger m-3-0-d-inline-block">! SCADUTO !</span>
+                                                <br><span class="alert-badge alert-danger spacing-element-66">! SCADUTO !</span>
                                             </c:if>
                                             <c:if test="${u.portoArmiInScadenza}">
-                                                <br><span class="alert-badge alert-warning m-3-0-d-inline-block">Scade tra meno di 30 gg</span>
+                                                <br><span class="alert-badge alert-warning spacing-element-66">Scade tra meno di 30 gg</span>
                                             </c:if>
                                         </c:if>
                                         <c:if test="${empty u.numLicenza}">
-                                            <span class="text-999-d-block-mb-5"><i>Nessuna licenza</i></span>
+                                            <span class="highlight-text-71-d-block-spacing-element-20"><i>Nessuna licenza</i></span>
                                         </c:if>
                                         
-                                        <form action="${pageContext.request.contextPath}/admin/utenti" method="post" class="mt-8-d-flex-flex-direction-column-gap-4-bg-f9f9f9-">
+                                        <form action="${pageContext.request.contextPath}/admin/utenti" method="post" class="custom-element-68">
                                             <input type="hidden" name="action" value="aggiornaPortoArmi">
                                             <input type="hidden" name="cf" value="${u.cf}">
-                                            <input type="text" name="numLicenza" placeholder="N. Licenza" value="${u.numLicenza}" class="p-4-fs-11-border-1-solid-ccc-rounded-3" required>
-                                            <input type="date" name="scadenza" value="${u.scadenzaPortoArmi}" class="p-4-fs-11-border-1-solid-ccc-rounded-3" required>
-                                            <button type="submit" class="action-btn bg-primary-p-4-fs-11-w-100pct">Salva/Aggiorna</button>
+                                            <input type="text" name="numLicenza" placeholder="N. Licenza" value="${u.numLicenza}" class="btn-custom-69" required>
+                                            <input type="date" name="scadenza" value="${u.scadenzaPortoArmi}" class="btn-custom-69" required>
+                                            <button type="submit" class="action-btn btn-custom-70">Salva/Aggiorna</button>
                                         </form>
                                     </c:if>
                                     <c:if test="${u.tipoCliente != 'Socio'}">
-                                        <span class="text-999"><i>Non applicabile</i></span>
+                                        <span class="highlight-text-71"><i>Non applicabile</i></span>
                                     </c:if>
                                 </td>
                                 

@@ -27,9 +27,9 @@
                     </c:forEach>
                 </ul>
                 <div class="order-recap-total">
-                    Totale da pagare: <span class="text-accent-1">€ <fmt:formatNumber value="${sessionScope.carrello.totale}" minFractionDigits="2" /></span>
+                    Totale da pagare: <span class="highlight-text-2-1">€ <fmt:formatNumber value="${sessionScope.carrello.totale}" minFractionDigits="2" /></span>
                 </div>
-                <p class="fs-12-text-muted-mt-20-line-height-1-5">
+                <p class="highlight-text-27">
                     <c:set var="haFisico" value="false" />
                     <c:forEach var="r" items="${sessionScope.carrello.righe}">
                         <c:if test="${r.tipo == 'Arma' || r.tipo == 'Munizione'}"><c:set var="haFisico" value="true" /></c:if>
@@ -46,8 +46,8 @@
                 <h2>Dati di Pagamento</h2>
                 
                 <div class="payment-icons">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1200px-Mastercard-logo.svg.png" alt="Mastercard" class="object-fit-contain">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="Visa" class="object-fit-contain">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1200px-Mastercard-logo.svg.png" alt="Mastercard" class="custom-element-28">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="Visa" class="custom-element-28">
                 </div>
 
                 <form action="${pageContext.request.contextPath}/checkout" method="post" id="paymentForm">
@@ -72,7 +72,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn-submit w-100pct-mt-10">PAGA E CONFERMA ORDINE</button>
+                    <button type="submit" class="btn-submit layout-wrapper-29">PAGA E CONFERMA ORDINE</button>
                 </form>
             </div>
         </div>

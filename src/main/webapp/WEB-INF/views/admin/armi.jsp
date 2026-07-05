@@ -40,7 +40,7 @@
                 <c:remove var="successMsg" scope="session" />
             </c:if>
             <c:if test="${not empty sessionScope.errorMsg}">
-                <div class="alert-error">
+                <div class="custom-element-14">
                     ${sessionScope.errorMsg}
                 </div>
                 <c:remove var="errorMsg" scope="session" />
@@ -90,10 +90,10 @@
                                 <td>
                                     <c:choose>
                                         <c:when test="${arma.attiva}">
-                                            <span class="status-badge status-active">ATTIVA</span>
+                                            <span class="custom-element-59 status-active">ATTIVA</span>
                                         </c:when>
                                         <c:otherwise>
-                                            <span class="status-badge status-inactive">SOSPESA</span>
+                                            <span class="custom-element-59 status-inactive">SOSPESA</span>
                                         </c:otherwise>
                                     </c:choose>
                                 </td>

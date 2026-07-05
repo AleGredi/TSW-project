@@ -63,7 +63,7 @@
                             <div class="product-card">
                                 <img class="card-img" src="${pageContext.request.contextPath}/ImageRenderer?type=munizione&id=${mun.lotto}" alt="${mun.marca}">
                                 <div class="card-body">
-                                    <span class="card-tag bg-dark">${mun.calibro}</span>
+                                    <span class="card-tag custom-element-12">${mun.calibro}</span>
                                     <h3>${mun.marca}</h3>
                                     <p class="card-desc">${mun.descrizione}</p>
                                     <div class="card-footer">

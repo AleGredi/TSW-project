@@ -14,10 +14,10 @@
 
     <jsp:include page="header.jsp" />
 
-    <main class="dashboard max-w-1000">
+    <main class="dashboard layout-wrapper-33">
         
-        <div class="d-flex-justify-content-space-between-align-items-c">
-            <h2 class="m-0-text-primary-font-family-EB-Garamond-serif-upp">
+        <div class="spacing-element-34">
+            <h2 class="spacing-element-18-text-primary-font-family-EB-Garamond-serif-upp">
                 <c:choose>
                     <c:when test="${tipoStorico == 'noleggi'}">STORICO NOLEGGI ARMI</c:when>
                     <c:when test="${tipoStorico == 'acquisti'}">STORICO ACQUISTI MUNIZIONI</c:when>
@@ -33,8 +33,8 @@
 
         <c:choose>
             <c:when test="${tipoStorico == 'campi' && not empty prenotazioniPagina}">
-                <div class="cart-table-wrapper box-shadow-0-4-15-rgba-0000-05-rounded-12-overflow">
-                    <table class="cart-table mb-0-box-shadow-none">
+                <div class="cart-table-wrapper custom-element-36">
+                    <table class="cart-table spacing-element-37">
                         <thead>
                             <tr>
                                 <th>Codice Prenotazione</th>
@@ -45,11 +45,11 @@
                         <tbody>
                             <c:forEach items="${prenotazioniPagina}" var="p">
                                 <tr>
-                                    <td class="fw-bold-text-muted">#${p.codice}</td>
+                                    <td class="highlight-text-38">#${p.codice}</td>
                                     <td><strong>Campo ${p.campoId}</strong></td>
                                     <td>
-                                        <span class="d-block-text-dark-fw-600"><fmt:formatDate value="${p.data}" pattern="dd/MM/yyyy" /></span>
-                                        <span class="product-type mt-4"><fmt:formatDate value="${p.fasciaOraria}" pattern="HH:mm" /></span>
+                                        <span class="custom-element-39"><fmt:formatDate value="${p.data}" pattern="dd/MM/yyyy" /></span>
+                                        <span class="product-type spacing-element-40"><fmt:formatDate value="${p.fasciaOraria}" pattern="HH:mm" /></span>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -60,18 +60,18 @@
 
             <c:when test="${tipoStorico != 'campi' && not empty ordiniPagina}">
                 <c:forEach items="${ordiniPagina}" var="ordine">
-                    <div class="bg-fff-rounded-10-border-1-solid-eaeaea-box-shadow">
-                        <div class="d-flex-justify-content-space-between-border-bottom">
+                    <div class="checkout-panel">
+                        <div class="custom-element-41">
                             <div>
-                                <strong class="text-primary-fs-18">Ordine #${ordine.codice}</strong><br>
-                                <span class="text-muted-fs-14"><fmt:formatDate value="${ordine.data}" pattern="dd/MM/yyyy HH:mm"/></span>
+                                <strong class="highlight-text-42">Ordine #${ordine.codice}</strong><br>
+                                <span class="text-small-centered-43"><fmt:formatDate value="${ordine.data}" pattern="dd/MM/yyyy HH:mm"/></span>
                             </div>
                             <div>
-                                <span class="product-type bg-accent-text-white-border-none">${ordine.stato}</span>
+                                <span class="product-type highlight-text-44">${ordine.stato}</span>
                             </div>
                         </div>
-                        <table class="cart-table m-0-box-shadow-none-border-1-solid-eee">
-                            <thead class="bg-f9f9f9-text-dark">
+                        <table class="cart-table spacing-element-18-box-shadow-none-border-1-solid-eee">
+                            <thead class="panel-box-46">
                                 <tr>
                                     <th>Prodotto</th>
                                     <th>Prezzo Unitario</th>
@@ -86,11 +86,11 @@
                                                 <strong>${riga.idProdotto}</strong><br>
                                                 <span class="product-type">${riga.tipoProdotto}</span>
                                                 <c:if test="${riga.durata > 0}">
-                                                    <br><small class="text-muted">${riga.durata} ore</small>
+                                                    <br><small class="highlight-text-47">${riga.durata} ore</small>
                                                 </c:if>
                                             </td>
                                             <td>€ <fmt:formatNumber value="${riga.prezzo}" minFractionDigits="2" /></td>
-                                            <td class="fw-bold">x${riga.quantita}</td>
+                                            <td class="custom-element-48">x${riga.quantita}</td>
                                         </tr>
                                     </c:if>
                                 </c:forEach>
@@ -101,7 +101,7 @@
             </c:when>
             
             <c:otherwise>
-                <p class="text-muted-font-style-italic-bg-fff-p-30-rounded-1">Nessun risultato trovato per questa categoria.</p>
+                <p class="custom-element-49">Nessun risultato trovato per questa categoria.</p>
             </c:otherwise>
         </c:choose>
 
@@ -116,7 +116,7 @@
                     </c:otherwise>
                 </c:choose>
                 
-                <span class="d-flex-align-items-center-fw-bold-text-muted">Pagina ${currentPage} di ${totalPages}</span>
+                <span class="d-flex-align-items-center-highlight-text-38">Pagina ${currentPage} di ${totalPages}</span>
                 
                 <c:choose>
                     <c:when test="${currentPage < totalPages}">

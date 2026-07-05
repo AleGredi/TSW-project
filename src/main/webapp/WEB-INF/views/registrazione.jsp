@@ -10,7 +10,7 @@
 </head>
 <body class="auth-page">
     <div class="reg-box">
-        <h2 class="font-family-EB-Garamond-serif-uppercase">REGISTRATI</h2>
+        <h2 class="custom-element-8">REGISTRATI</h2>
         
         <c:if test="${not empty errore}">
             <div class="error-message">${errore}</div>
@@ -51,13 +51,13 @@
             </div>
 
             <div id="socio-fields" class="socio-fields">
-                <small class="text-666-d-block-mb-10">La data d'iscrizione verrà impostata automaticamente a oggi. Il tuo <b>Numero Tessera</b> verrà generato automaticamente e mostrato al termine della registrazione.</small>
+                <small class="highlight-text-25">La data d'iscrizione verrà impostata automaticamente a oggi. Il tuo <b>Numero Tessera</b> verrà generato automaticamente e mostrato al termine della registrazione.</small>
             </div>
             
             <button type="submit" class="btn-submit">REGISTRATI</button>
             
-            <div class="text-center-mt-25-fs-14">
-                Hai già un account? <a href="${pageContext.request.contextPath}/login" class="fw-bold-text-decoration-underline">Accedi qui</a>
+            <div class="text-small-centered-9">
+                Hai già un account? <a href="${pageContext.request.contextPath}/login" class="custom-element-10">Accedi qui</a>
             </div>
         </form>
     </div>

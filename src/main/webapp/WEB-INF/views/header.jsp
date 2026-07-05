@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <header class="header">
-    <a href="${pageContext.request.contextPath}/home" class="text-decoration-none-text-inherit">
-        <h1 class="letter-spacing-2-uppercase">SkeetPro</h1>
+    <a href="${pageContext.request.contextPath}/home" class="custom-element-30">
+        <h1 class="letter-spacing-2-custom-element-13">SkeetPro</h1>
     </a>
     <div class="nav-links">
         <a href="${pageContext.request.contextPath}/catalogo">Catalogo</a>
@@ -10,7 +10,7 @@
         <a href="${pageContext.request.contextPath}/carrello">
             Carrello
             <c:if test="${not empty sessionScope.carrello and sessionScope.carrello.numeroArticoli > 0}">
-                <span class="bg-accent-text-white-p-2-6-rounded-12-fs-11-ml-5">
+                <span class="custom-element-32">
                     ${sessionScope.carrello.numeroArticoli}
                 </span>
             </c:if>

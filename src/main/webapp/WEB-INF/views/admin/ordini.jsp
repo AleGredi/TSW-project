@@ -41,7 +41,7 @@
                 <c:remove var="successMsg" scope="session" />
             </c:if>
             <c:if test="${not empty sessionScope.errorMsg}">
-                <div class="alert-error">
+                <div class="custom-element-14">
                     ${sessionScope.errorMsg}
                 </div>
                 <c:remove var="errorMsg" scope="session" />
@@ -72,13 +72,13 @@
                                 <td>
                                     <c:choose>
                                         <c:when test="${o.stato == 'Da Ritirare'}">
-                                            <span class="status-badge status-suspended">DA RITIRARE</span>
+                                            <span class="custom-element-59 status-suspended">DA RITIRARE</span>
                                         </c:when>
                                         <c:when test="${o.stato == 'Ritirato'}">
-                                            <span class="status-badge status-active">RITIRATO</span>
+                                            <span class="custom-element-59 status-active">RITIRATO</span>
                                         </c:when>
                                         <c:otherwise>
-                                            <span class="status-badge status-inactive">ANNULLATO</span>
+                                            <span class="custom-element-59 status-inactive">ANNULLATO</span>
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
