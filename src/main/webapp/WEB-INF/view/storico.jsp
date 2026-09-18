@@ -14,18 +14,22 @@
 
     <jsp:include page="header.jsp" />
 
-    <main class="dashboard layout-wrapper-33">
+    <main class="dashboard storico-dashboard">
         
-        <div class="spacing-element-34">
-            <h2 class="spacing-element-18-text-primary-font-family-EB-Garamond-serif-upp">
+        <div class="storico-header">
+            <h2>
                 <c:choose>
                     <c:when test="${tipoStorico == 'noleggi'}">STORICO NOLEGGI ARMI</c:when>
                     <c:when test="${tipoStorico == 'acquisti'}">STORICO ACQUISTI MUNIZIONI</c:when>
                     <c:otherwise>STORICO PRENOTAZIONI CAMPI</c:otherwise>
                 </c:choose>
             </h2>
-            <a href="${pageContext.request.contextPath}/profilo" class="btn-outline">TORNA AL PROFILO</a>
         </div>
+
+        <c:if test="${not empty sessionScope.successMessage}">
+            <div class="success-message">${sessionScope.successMessage}</div>
+            <c:remove var="successMessage" scope="session" />
+        </c:if>
 
         <c:if test="${not empty errore}">
             <div class="error-message">${errore}</div>
@@ -33,8 +37,8 @@
 
         <c:choose>
             <c:when test="${tipoStorico == 'campi' && not empty prenotazioniPagina}">
-                <div class="cart-table-wrapper custom-element-36">
-                    <table class="cart-table spacing-element-37">
+                <div class="table-wrapper">
+                    <table class="cart-table">
                         <thead>
                             <tr>
                                 <th>Codice Prenotazione</th>
@@ -45,11 +49,11 @@
                         <tbody>
                             <c:forEach items="${prenotazioniPagina}" var="p">
                                 <tr>
-                                    <td class="highlight-text-38">#${p.codice}</td>
+                                    <td class="order-code">#${p.codice}</td>
                                     <td><strong>Campo ${p.campoId}</strong></td>
                                     <td>
-                                        <span class="custom-element-39"><fmt:formatDate value="${p.data}" pattern="dd/MM/yyyy" /></span>
-                                        <span class="product-type spacing-element-40"><fmt:formatDate value="${p.fasciaOraria}" pattern="HH:mm" /></span>
+                                        <span class="date-main"><fmt:formatDate value="${p.data}" pattern="dd/MM/yyyy" /></span>
+                                        <span class="product-type"><fmt:formatDate value="${p.fasciaOraria}" pattern="HH:mm" /></span>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -60,18 +64,18 @@
 
             <c:when test="${tipoStorico != 'campi' && not empty ordiniPagina}">
                 <c:forEach items="${ordiniPagina}" var="ordine">
-                    <div class="checkout-panel">
-                        <div class="custom-element-41">
+                    <div class="order-card">
+                        <div class="order-card-header">
                             <div>
-                                <strong class="highlight-text-42">Ordine #${ordine.codice}</strong><br>
-                                <span class="text-small-centered-43"><fmt:formatDate value="${ordine.data}" pattern="dd/MM/yyyy HH:mm"/></span>
+                                <strong>Ordine #${ordine.codice}</strong><br>
+                                <span class="order-date"><fmt:formatDate value="${ordine.data}" pattern="dd/MM/yyyy HH:mm"/></span>
                             </div>
                             <div>
-                                <span class="product-type highlight-text-44">${ordine.stato}</span>
+                                <span class="product-type status-pill">${ordine.stato}</span>
                             </div>
                         </div>
-                        <table class="cart-table spacing-element-18-box-shadow-none-border-1-solid-eee">
-                            <thead class="panel-box-46">
+                        <table class="cart-table inner-table">
+                            <thead>
                                 <tr>
                                     <th>Prodotto</th>
                                     <th>Prezzo Unitario</th>
@@ -86,11 +90,11 @@
                                                 <strong>${riga.idProdotto}</strong><br>
                                                 <span class="product-type">${riga.tipoProdotto}</span>
                                                 <c:if test="${riga.durata > 0}">
-                                                    <br><small class="highlight-text-47">${riga.durata} ore</small>
+                                                    <br><small class="text-muted">${riga.durata} ore</small>
                                                 </c:if>
                                             </td>
                                             <td>€ <fmt:formatNumber value="${riga.prezzo}" minFractionDigits="2" /></td>
-                                            <td class="custom-element-48">x${riga.quantita}</td>
+                                            <td class="fw-bold">x${riga.quantita}</td>
                                         </tr>
                                     </c:if>
                                 </c:forEach>
@@ -101,7 +105,7 @@
             </c:when>
             
             <c:otherwise>
-                <p class="custom-element-49">Nessun risultato trovato per questa categoria.</p>
+                <p class="empty-msg">Nessun risultato trovato per questa categoria.</p>
             </c:otherwise>
         </c:choose>
 
@@ -116,7 +120,7 @@
                     </c:otherwise>
                 </c:choose>
                 
-                <span class="d-flex-align-items-center-highlight-text-38">Pagina ${currentPage} di ${totalPages}</span>
+                <span class="page-info">Pagina ${currentPage} di ${totalPages}</span>
                 
                 <c:choose>
                     <c:when test="${currentPage < totalPages}">

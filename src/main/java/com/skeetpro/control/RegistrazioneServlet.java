@@ -24,7 +24,7 @@ public class RegistrazioneServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/views/registrazione.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/view/registrazione.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,22 +37,22 @@ public class RegistrazioneServlet extends HttpServlet {
 
         if (cf == null || !cf.matches("^[A-Z0-9]{16}$")) {
             request.setAttribute("errore", "Codice Fiscale non valido.");
-            request.getRequestDispatcher("/WEB-INF/views/registrazione.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/view/registrazione.jsp").forward(request, response);
             return;
         }
         if (nome == null || nome.trim().isEmpty() || cognome == null || cognome.trim().isEmpty()) {
             request.setAttribute("errore", "Nome e Cognome sono obbligatori.");
-            request.getRequestDispatcher("/WEB-INF/views/registrazione.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/view/registrazione.jsp").forward(request, response);
             return;
         }
         if (email == null || !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
             request.setAttribute("errore", "Email non valida.");
-            request.getRequestDispatcher("/WEB-INF/views/registrazione.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/view/registrazione.jsp").forward(request, response);
             return;
         }
         if (password == null || password.length() < 8) {
             request.setAttribute("errore", "La password deve contenere almeno 8 caratteri.");
-            request.getRequestDispatcher("/WEB-INF/views/registrazione.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/view/registrazione.jsp").forward(request, response);
             return;
         }
 
@@ -80,7 +80,7 @@ public class RegistrazioneServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/login");
         } else {
             request.setAttribute("errore", "Errore durante la registrazione. Assicurati che il CF o l'Email non siano già in uso.");
-            request.getRequestDispatcher("/WEB-INF/views/registrazione.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/view/registrazione.jsp").forward(request, response);
         }
     }
 }

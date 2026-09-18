@@ -52,10 +52,29 @@ function validateRequired(input) {
     return true;
 }
 
+function validatePassword(passwordInput) {
+    if (passwordInput.value.length < 8) {
+        showError(passwordInput, "La password deve contenere almeno 8 caratteri.");
+        return false;
+    }
+    clearError(passwordInput);
+    return true;
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     
     const regForm = document.getElementById('regForm');
     if (regForm) {
+        const tipoSelect = document.getElementById('tipoCliente');
+        const socioFields = document.getElementById('socio-fields');
+        if (tipoSelect && socioFields) {
+            const updateSocioVisibility = () => {
+                socioFields.style.display = (tipoSelect.value === 'Socio') ? 'block' : 'none';
+            };
+            tipoSelect.addEventListener('change', updateSocioVisibility);
+            updateSocioVisibility();
+        }
+
         const cfInput = document.getElementById('cf');
         const emailInput = document.getElementById('email');
         const nomeInput = document.getElementById('nome');
@@ -66,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (emailInput) emailInput.addEventListener('change', () => validateEmail(emailInput));
         if (nomeInput) nomeInput.addEventListener('change', () => validateRequired(nomeInput));
         if (cognomeInput) cognomeInput.addEventListener('change', () => validateRequired(cognomeInput));
-        if (passwordInput) passwordInput.addEventListener('change', () => validateRequired(passwordInput));
+        if (passwordInput) passwordInput.addEventListener('change', () => validatePassword(passwordInput));
 
         regForm.addEventListener('submit', function(e) {
             let isValid = true;
@@ -74,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if (!validateRequired(cognomeInput)) isValid = false;
             if (!validateCF(cfInput)) isValid = false;
             if (!validateEmail(emailInput)) isValid = false;
-            if (!validateRequired(passwordInput)) isValid = false;
+            if (!validatePassword(passwordInput)) isValid = false;
 
             if (!isValid) {
                 e.preventDefault();

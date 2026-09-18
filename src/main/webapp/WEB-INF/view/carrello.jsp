@@ -17,7 +17,7 @@
         <c:choose>
             <c:when test="${empty sessionScope.carrello or empty sessionScope.carrello.righe}">
                 <div class="empty-cart">
-                    <h2 class="custom-element-13">Il tuo carrello è vuoto</h2>
+                    <h2>Il tuo carrello è vuoto</h2>
                     <p>Sembra che tu non abbia ancora aggiunto nulla per la tua prossima sessione di tiro.</p>
                     <a href="${pageContext.request.contextPath}/home" class="btn-outline">Scopri il Catalogo</a>
                 </div>
@@ -25,7 +25,7 @@
             
             <c:otherwise>
                 <c:if test="${not empty sessionScope.erroreCarrello}">
-                <div class="error-message alert-box custom-element-14">
+                <div class="error-message">
                     ${sessionScope.erroreCarrello}
                 </div>
                 <c:remove var="erroreCarrello" scope="session" />
@@ -49,10 +49,10 @@
                             <td><strong>${riga.nome}</strong></td>
                             <td><span class="badge ${riga.tipo.toLowerCase()}">${riga.tipo}</span></td>
                             <td>
-                                <div class="custom-element-15">
-                                    <button class="btn-outline btn-custom-16" onclick="aggiornaQuantita('${riga.idProdotto}', '${riga.tipo}', ${riga.quantita}, -1)">-</button>
-                                    <span class="custom-element-17">${riga.quantita}</span>
-                                    <button class="btn-outline btn-custom-16" onclick="aggiornaQuantita('${riga.idProdotto}', '${riga.tipo}', ${riga.quantita}, 1)">+</button>
+                                <div class="qty-control">
+                                    <button class="qty-btn" onclick="aggiornaQuantita('${riga.idProdotto}', '${riga.tipo}', ${riga.quantita}, -1)">-</button>
+                                    <span class="qty-value">${riga.quantita}</span>
+                                    <button class="qty-btn" onclick="aggiornaQuantita('${riga.idProdotto}', '${riga.tipo}', ${riga.quantita}, 1)">+</button>
                                 </div>
                             </td>
                             <td>${riga.durata > 0 ? riga.durata : '-'}</td>
@@ -68,14 +68,17 @@
 
             <div class="cart-summary">
                 <h3>Totale Ordine: <span id="cart-totale">€ <fmt:formatNumber value="${sessionScope.carrello.totale}" minFractionDigits="2" /></span></h3>
-                <form action="${pageContext.request.contextPath}/checkout" method="get" class="spacing-element-18">
-                    <button type="submit" class="btn-checkout">PROCEDI AL PAGAMENTO</button>
-                </form>
+                <div class="cart-buttons">
+                    <button type="button" class="btn-outline btn-clear-cart" onclick="svuotaCarrello()">SVUOTA CARRELLO</button>
+                    <form action="${pageContext.request.contextPath}/checkout" method="get">
+                        <button type="submit" class="btn-checkout">PROCEDI AL PAGAMENTO</button>
+                    </form>
+                </div>
             </div>
             </c:otherwise>
         </c:choose>
     </main>
 
-    <script src="${pageContext.request.contextPath}/scripts/carrello.js"></script>
+    <script src="${pageContext.request.contextPath}/scripts/carrello.js?v=2"></script>
 </body>
 </html>

@@ -1,3 +1,8 @@
+function getContextPath() {
+    const header = document.querySelector('.header');
+    return header ? (header.getAttribute('data-context-path') || '') : '';
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     const campoSelect = document.getElementById("campoId");
     const dataInput = document.getElementById("data");
@@ -16,7 +21,8 @@ document.addEventListener("DOMContentLoaded", function() {
             btnSubmit.disabled = true;
             btnSubmit.style.opacity = '0.5';
 
-            const url = `campi?action=checkSlot&campoId=${campoId}&data=${data}&fasciaOraria=${orario}`;
+            const cp = getContextPath();
+            const url = `${cp}/campi?action=checkSlot&campoId=${campoId}&data=${data}&fasciaOraria=${orario}`;
             
             fetch(url)
                 .then(response => response.json())

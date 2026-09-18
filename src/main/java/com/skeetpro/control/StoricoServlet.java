@@ -35,7 +35,7 @@ public class StoricoServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("utente") == null) {
+        if (session == null || session.getAttribute("utente") == null || session.getAttribute("csrfToken") == null) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
@@ -115,6 +115,6 @@ public class StoricoServlet extends HttpServlet {
             request.setAttribute("errore", "Errore nel caricamento dello storico: " + e.getMessage());
         }
 
-        request.getRequestDispatcher("/WEB-INF/views/storico.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/view/storico.jsp").forward(request, response);
     }
 }

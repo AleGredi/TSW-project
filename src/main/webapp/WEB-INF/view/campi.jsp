@@ -17,8 +17,8 @@
     <main class="catalogo-container">
         
         <section class="catalogo-section">
-            <h2 class="custom-element-13">I NOSTRI CAMPI DI TIRO</h2>
-            <p class="fs-18-highlight-text-47-mb-40-max-w-800">
+            <h2>I NOSTRI CAMPI DI TIRO</h2>
+            <p class="section-desc">
                 SkeetPro offre impianti all'avanguardia per tutte le principali discipline di Tiro a Volo.
                 Scopri le nostre pedane e prenota la tua sessione.
             </p>
@@ -33,7 +33,7 @@
                             <div class="product-card">
                                 <img class="card-img" src="${pageContext.request.contextPath}/images/campo_${campo.disciplina.toLowerCase()}.jpg" alt="${campo.disciplina}" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x200.png?text=Campo+SkeetPro';">
                                 <div class="card-body">
-                                    <h3 class="custom-element-13-font-family-EB-Garamond-serif">Campo ${campo.id} - ${campo.disciplina}</h3>
+                                    <h3>Campo ${campo.id} - ${campo.disciplina}</h3>
                                     <p class="card-desc">
                                         <c:choose>
                                             <c:when test="${campo.disciplina == 'Trap'}">
@@ -66,9 +66,9 @@
         </section>
 
         <c:if test="${not empty sessionScope.utente}">
-            <hr class="custom-element-53">
+            <hr class="section-divider">
             
-            <section class="catalogo-section" id="form-prenotazione" class="layout-wrapper-19-spacing-element-18-auto">
+            <section class="catalogo-section" id="form-prenotazione">
                 
                 <c:if test="${not empty errore}">
                     <div class="error-message">${errore}</div>
@@ -78,11 +78,11 @@
                     <c:remove var="messaggioSuccesso" scope="session" />
                 </c:if>
 
-                <div class="flex-container-55">
-                    <div class="flex-container-56">
-                        <h2 class="custom-element-57">PRENOTA LA TUA PEDANA</h2>
+                <div class="booking-layout">
+                    <div class="booking-col">
+                        <h2>PRENOTA LA TUA PEDANA</h2>
                         
-                        <form action="${pageContext.request.contextPath}/campi" method="post" class="custom-element-58">
+                        <form action="${pageContext.request.contextPath}/campi" method="post" class="booking-form">
                             <div class="form-group">
                                 <label for="campoId">Seleziona Campo / Disciplina:</label>
                                 <select name="campoId" id="campoId" required>
@@ -109,11 +109,12 @@
                                     <option value="15:00">15:00 - 16:00</option>
                                     <option value="16:00">16:00 - 17:00</option>
                                 </select>
-                                <div id="slot-status" class="custom-element-59">Seleziona i campi per verificare la disponibilità.</div>
+                                <div id="slot-status" class="slot-status">Seleziona i campi per verificare la disponibilità.</div>
                             </div>
 
-                            <button type="submit" id="btn-prenota" class="btn-submit custom-element-60" disabled>CONFERMA PRENOTAZIONE</button>
+                            <button type="submit" id="btn-prenota" class="btn-submit" disabled>CONFERMA PRENOTAZIONE</button>
                         </form>
+                    </div>
                 </div>
             </section>
         </c:if>

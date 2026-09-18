@@ -10,7 +10,7 @@
 </head>
 <body class="auth-page">
     <div class="reg-box">
-        <h2 class="custom-element-8">REGISTRATI</h2>
+        <h2>REGISTRATI</h2>
         
         <c:if test="${not empty errore}">
             <div class="error-message">${errore}</div>
@@ -19,7 +19,7 @@
         <form id="regForm" action="${pageContext.request.contextPath}/registrazione" method="post">
             <div class="form-group">
                 <label for="tipoCliente">TIPO DI ACCOUNT</label>
-                <select id="tipoCliente" name="tipoCliente" onchange="toggleSocioFields()" required>
+                <select id="tipoCliente" name="tipoCliente" required>
                     <option value="Temporaneo">Utente Temporaneo</option>
                     <option value="Socio">Socio del Circolo</option>
                 </select>
@@ -51,29 +51,17 @@
             </div>
 
             <div id="socio-fields" class="socio-fields">
-                <small class="highlight-text-25">La data d'iscrizione verrà impostata automaticamente a oggi. Il tuo <b>Numero Tessera</b> verrà generato automaticamente e mostrato al termine della registrazione.</small>
+                <small class="socio-info">La data d'iscrizione verrà impostata automaticamente a oggi. Il tuo <b>Numero Tessera</b> verrà generato automaticamente e mostrato al termine della registrazione.</small>
             </div>
             
             <button type="submit" class="btn-submit">REGISTRATI</button>
             
-            <div class="text-small-centered-9">
-                Hai già un account? <a href="${pageContext.request.contextPath}/login" class="custom-element-10">Accedi qui</a>
-            </div>
+            <p class="auth-switch">
+                Hai già un account? <a href="${pageContext.request.contextPath}/login">Accedi qui</a>
+            </p>
         </form>
     </div>
 
-    <script>
-        function toggleSocioFields() {
-            var tipo = document.getElementById("tipoCliente").value;
-            var socioFields = document.getElementById("socio-fields");
-            
-            if (tipo === "Socio") {
-                socioFields.style.display = "block";
-            } else {
-                socioFields.style.display = "none";
-            }
-        }
-    </script>
     <script src="${pageContext.request.contextPath}/scripts/validazione.js"></script>
 </body>
 </html>

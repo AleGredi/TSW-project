@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet("/profilo")
+@WebServlet({"/profilo", "/dashboard"})
 public class DashboardServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     
@@ -38,7 +38,7 @@ public class DashboardServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("utente") == null) {
+        if (session == null || session.getAttribute("utente") == null || session.getAttribute("csrfToken") == null) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
@@ -58,6 +58,6 @@ public class DashboardServlet extends HttpServlet {
             request.setAttribute("errore", "Errore nel caricamento dei dati del profilo: " + e.getMessage());
         }
 
-        request.getRequestDispatcher("/WEB-INF/views/dashboard.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/view/dashboard.jsp").forward(request, response);
     }
 }

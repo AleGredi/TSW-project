@@ -43,12 +43,12 @@ public class CampiServlet extends HttpServlet {
         List<Campo> campi = campoDAO.findAll();
         request.setAttribute("campi", campi);
         
-        request.getRequestDispatcher("/WEB-INF/views/campi.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/view/campi.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("utente") == null) {
+        if (session == null || session.getAttribute("utente") == null || session.getAttribute("csrfToken") == null) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }

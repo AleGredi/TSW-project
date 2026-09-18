@@ -12,7 +12,7 @@
 <body class="auth-page">
 
     <div class="login-box">
-        <h2 class="custom-element-8">ACCEDI</h2>
+        <h2>ACCEDI</h2>
         
         <c:if test="${not empty errore}">
             <div class="error-message">
@@ -42,8 +42,8 @@
             <button type="submit" class="btn-submit">LOGIN</button>
         </form>
 
-        <p class="text-small-centered-9">
-            Non hai un account? <a href="${pageContext.request.contextPath}/registrazione" class="custom-element-10">Registrati qui</a>
+        <p class="auth-switch">
+            Non hai un account? <a href="${pageContext.request.contextPath}/registrazione">Registrati qui</a>
         </p>
     </div>
     

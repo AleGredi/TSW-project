@@ -63,7 +63,7 @@
                             <div class="product-card">
                                 <img class="card-img" src="${pageContext.request.contextPath}/ImageRenderer?type=munizione&id=${mun.lotto}" alt="${mun.marca}">
                                 <div class="card-body">
-                                    <span class="card-tag custom-element-12">${mun.calibro}</span>
+                                    <span class="card-tag card-tag-dark">${mun.calibro}</span>
                                     <h3>${mun.marca}</h3>
                                     <p class="card-desc">${mun.descrizione}</p>
                                     <div class="card-footer">
@@ -81,45 +81,6 @@
     </main>
 
     <script src="${pageContext.request.contextPath}/scripts/carrello.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const searchInput = document.getElementById('search-input');
-            const armiGrid = document.getElementById('armi-grid');
-            const munizioniGrid = document.getElementById('munizioni-grid');
-            let debounceTimer;
-
-            if (searchInput) {
-                searchInput.addEventListener('input', (e) => {
-                    clearTimeout(debounceTimer);
-                    debounceTimer = setTimeout(() => {
-                        const q = e.target.value;
-                        const url = '${pageContext.request.contextPath}/catalogo?q=' + encodeURIComponent(q);
-                        
-                        fetch(url)
-                            .then(res => res.text())
-                            .then(html => {
-                                const parser = new DOMParser();
-                                const doc = parser.parseFromString(html, 'text/html');
-                                
-                                const newArmiGrid = doc.getElementById('armi-grid');
-                                const newMunizioniGrid = doc.getElementById('munizioni-grid');
-                                
-                                if (newArmiGrid && armiGrid) {
-                                    armiGrid.innerHTML = newArmiGrid.innerHTML;
-                                }
-                                if (newMunizioniGrid && munizioniGrid) {
-                                    munizioniGrid.innerHTML = newMunizioniGrid.innerHTML;
-                                }
-                                
-                                // Aggiorna l'URL senza ricaricare per mantenere la query
-                                const newUrl = window.location.pathname + (q ? '?q=' + encodeURIComponent(q) : '');
-                                window.history.replaceState({}, '', newUrl);
-                            })
-                            .catch(err => console.error("Errore ricerca AJAX:", err));
-                    }, 300);
-                });
-            }
-        });
-    </script>
+    <script src="${pageContext.request.contextPath}/scripts/catalogo.js"></script>
 </body>
 </html>

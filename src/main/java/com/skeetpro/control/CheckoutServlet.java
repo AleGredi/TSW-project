@@ -21,6 +21,7 @@ import com.skeetpro.model.RigaOrdine;
 
 @WebServlet("/checkout")
 public class CheckoutServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
     
     private OrdineDAO ordineDAO;
     private ClienteDAO clienteDAO;
@@ -60,7 +61,11 @@ public class CheckoutServlet extends HttpServlet {
             }
         }
 
-        request.getRequestDispatcher("/WEB-INF/views/checkout.jsp").forward(request, response);
+        if (session.getAttribute("csrfToken") == null) {
+            session.setAttribute("csrfToken", java.util.UUID.randomUUID().toString());
+        }
+
+        request.getRequestDispatcher("/WEB-INF/view/checkout.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -69,6 +74,13 @@ public class CheckoutServlet extends HttpServlet {
         
         if (utente == null) {
             response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
+
+        String sessionToken = (String) session.getAttribute("csrfToken");
+        String requestToken = request.getParameter("csrfToken");
+        if (sessionToken != null && !sessionToken.equals(requestToken)) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Sessione o token di sicurezza non valido.");
             return;
         }
         
@@ -84,6 +96,31 @@ public class CheckoutServlet extends HttpServlet {
         Carrello carrello = (Carrello) session.getAttribute("carrello");
         if (carrello == null || carrello.getRighe().isEmpty()) {
             response.sendRedirect(request.getContextPath() + "/carrello");
+            return;
+        }
+
+        String indirizzo = request.getParameter("indirizzo");
+        String citta = request.getParameter("citta");
+        String cap = request.getParameter("cap");
+        String provincia = request.getParameter("provincia");
+        String telefono = request.getParameter("telefono");
+        String titolare = request.getParameter("titolare");
+        String numeroCarta = request.getParameter("numeroCarta");
+        String scadenzaCarta = request.getParameter("scadenza");
+        String cvv = request.getParameter("cvv");
+
+        if (indirizzo == null || indirizzo.trim().isEmpty() ||
+            citta == null || citta.trim().isEmpty() ||
+            cap == null || !cap.trim().matches("^\\d{5}$") ||
+            provincia == null || !provincia.trim().matches("^[A-Za-z]{2}$") ||
+            telefono == null || !telefono.trim().matches("^[0-9\\s+]{8,15}$") ||
+            titolare == null || titolare.trim().isEmpty() ||
+            numeroCarta == null || numeroCarta.replaceAll("\\D", "").length() != 16 ||
+            scadenzaCarta == null || !scadenzaCarta.trim().matches("^(0[1-9]|1[0-2])\\/([0-9]{2})$") ||
+            cvv == null || !cvv.trim().matches("^\\d{3}$")) {
+            
+            session.setAttribute("erroreCarrello", "Dati di spedizione o di pagamento non validi. Controlla i campi inseriti.");
+            response.sendRedirect(request.getContextPath() + "/checkout");
             return;
         }
 
@@ -118,13 +155,17 @@ public class CheckoutServlet extends HttpServlet {
             ordineDAO.salvaOrdine(ordine);
             session.removeAttribute("carrello");
             
-            String msg = "Ordine confermato con successo (Codice: " + ordine.getCodice() + ").";
+            String msg = "Ordine confermato con successo (Codice: #" + ordine.getCodice() + ")!";
             if (expiresSoon) {
                 msg += " ATTENZIONE: Il tuo Porto d'Armi scadrà tra meno di 30 giorni (" + scadenza + "). Ricordati di rinnovarlo!";
             }
             session.setAttribute("successMessage", msg);
             
-            response.sendRedirect(request.getContextPath() + "/home");
+            String tipoRedirect = "acquisti";
+            if (!ordine.getRighe().isEmpty() && "Arma".equalsIgnoreCase(ordine.getRighe().get(0).getTipoProdotto())) {
+                tipoRedirect = "noleggi";
+            }
+            response.sendRedirect(request.getContextPath() + "/storico?tipo=" + tipoRedirect);
         } catch (Exception e) {
             e.printStackTrace();
             session.setAttribute("erroreCarrello", "Si è verificato un errore durante il checkout: " + e.getMessage());

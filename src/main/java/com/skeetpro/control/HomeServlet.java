@@ -27,6 +27,6 @@ public class HomeServlet extends HttpServlet {
             request.setAttribute("ruolo", "Guest");
         }
 
-        request.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/view/home.jsp").forward(request, response);
     }
 }

@@ -36,6 +36,6 @@ public class CatalogoServlet extends HttpServlet {
         request.setAttribute("armi", armi);
         request.setAttribute("munizioni", munizioni);
         
-        request.getRequestDispatcher("/WEB-INF/views/catalogo.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/view/catalogo.jsp").forward(request, response);
     }
 }

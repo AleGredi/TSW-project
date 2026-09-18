@@ -13,26 +13,26 @@
 
     <jsp:include page="header.jsp" />
 
-    <main class="dashboard layout-wrapper-19">
+    <main class="dashboard">
         <div class="welcome-box">
-            <h2 class="custom-element-13">Profilo di ${sessionScope.utente.nome} ${sessionScope.utente.cognome}</h2>
-            <p class="spacing-element-20">Tipo Account: <strong class="highlight-text-2-custom-element-13">${sessionScope.utente.tipoCliente}</strong> | C.F.: ${sessionScope.utente.cf}</p>
+            <h2>Profilo di ${sessionScope.utente.nome} ${sessionScope.utente.cognome}</h2>
+            <p class="user-meta">Tipo Account: <strong class="text-accent">${sessionScope.utente.tipoCliente}</strong> | C.F.: ${sessionScope.utente.cf}</p>
             
             <c:if test="${sessionScope.utente.tipoCliente == 'Socio'}">
-                <p class="highlight-text-22">
+                <p class="user-submeta">
                     Tessera N°: <strong>${sessionScope.utente.numeroTessera}</strong>
                     <c:choose>
                         <c:when test="${not empty scadenzaPortoArmi}">
                             | Scadenza Porto d'Armi: <strong>${scadenzaPortoArmi}</strong>
                         </c:when>
                         <c:otherwise>
-                            | <span class="highlight-text-23">Porto d'Armi Non Inserito o Scaduto</span>
+                            | <span class="text-error">Porto d'Armi Non Inserito o Scaduto</span>
                         </c:otherwise>
                     </c:choose>
                 </p>
             </c:if>
             
-            <div class="custom-element-24">
+            <div class="dashboard-actions">
                 <a href="${pageContext.request.contextPath}/storico?tipo=campi" class="btn">PRENOTAZIONI CAMPI</a>
                 <a href="${pageContext.request.contextPath}/storico?tipo=noleggi" class="btn-outline">NOLEGGI ARMI</a>
                 <a href="${pageContext.request.contextPath}/storico?tipo=acquisti" class="btn-outline">ACQUISTI MUNIZIONI</a>
