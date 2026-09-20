@@ -27,19 +27,26 @@ public class AdminOrdiniServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("admin") == null) {
+        if (session == null || session.getAttribute("admin") == null || session.getAttribute("adminCsrfToken") == null) {
             response.sendRedirect(request.getContextPath() + "/admin/login");
             return;
         }
 
-        List<OrdineAdminDTO> ordini = ordineDAO.findAllForAdmin();
+        String dataDa = request.getParameter("dataDa");
+        String dataA = request.getParameter("dataA");
+        String cliente = request.getParameter("cliente");
+
+        List<OrdineAdminDTO> ordini = ordineDAO.findOrdiniFiltrati(dataDa, dataA, cliente);
         request.setAttribute("ordini", ordini);
-        request.getRequestDispatcher("/WEB-INF/views/admin/ordini.jsp").forward(request, response);
+        request.setAttribute("dataDa", dataDa);
+        request.setAttribute("dataA", dataA);
+        request.setAttribute("cliente", cliente);
+        request.getRequestDispatcher("/WEB-INF/view/admin/ordini.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("admin") == null) {
+        if (session == null || session.getAttribute("admin") == null || session.getAttribute("adminCsrfToken") == null) {
             response.sendRedirect(request.getContextPath() + "/admin/login");
             return;
         }

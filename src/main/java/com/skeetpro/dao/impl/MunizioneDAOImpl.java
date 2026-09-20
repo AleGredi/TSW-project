@@ -135,4 +135,21 @@ public class MunizioneDAOImpl implements MunizioneDAO {
             throw new RuntimeException("Errore cambio stato Munizione", e);
         }
     }
+
+    @Override
+    public byte[] getFoto(String lotto) {
+        String sql = "SELECT Foto FROM Munizioni WHERE Lotto = ?";
+        try (Connection conn = DataSourceProvider.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, lotto);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getBytes("Foto");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

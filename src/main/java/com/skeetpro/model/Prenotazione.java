@@ -1,9 +1,11 @@
 package com.skeetpro.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
 
-public class Prenotazione {
+public class Prenotazione implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int codice;
     private Date data;
     private Time fasciaOraria;

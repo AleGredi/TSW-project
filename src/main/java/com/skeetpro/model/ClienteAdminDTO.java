@@ -1,8 +1,10 @@
 package com.skeetpro.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class ClienteAdminDTO {
+public class ClienteAdminDTO implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String cf;
     private String nome;
     private String cognome;

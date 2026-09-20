@@ -1,6 +1,9 @@
 package com.skeetpro.model;
 
-public class RigaCarrello {
+import java.io.Serializable;
+
+public class RigaCarrello implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String idProdotto; 
     private String tipo;       
     private String nome;

@@ -1,6 +1,9 @@
 package com.skeetpro.model;
 
-public class Munizione {
+import java.io.Serializable;
+
+public class Munizione implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String lotto;
     private String calibro;
     private String marca;

@@ -27,18 +27,25 @@ public class AdminPrenotazioniServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("admin") == null) {
+        if (session == null || session.getAttribute("admin") == null || session.getAttribute("adminCsrfToken") == null) {
             response.sendRedirect(request.getContextPath() + "/admin/login");
             return;
         }
 
-        List<PrenotazioneAdminDTO> prenotazioni = prenotazioneDAO.findAllForAdmin();
+        String dataDa = request.getParameter("dataDa");
+        String dataA = request.getParameter("dataA");
+        String cliente = request.getParameter("cliente");
+
+        List<PrenotazioneAdminDTO> prenotazioni = prenotazioneDAO.findPrenotazioniFiltrate(dataDa, dataA, cliente);
         request.setAttribute("prenotazioni", prenotazioni);
-        request.getRequestDispatcher("/WEB-INF/views/admin/prenotazioni.jsp").forward(request, response);
+        request.setAttribute("dataDa", dataDa);
+        request.setAttribute("dataA", dataA);
+        request.setAttribute("cliente", cliente);
+        request.getRequestDispatcher("/WEB-INF/view/admin/prenotazioni.jsp").forward(request, response);
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("admin") == null) {
+        if (session == null || session.getAttribute("admin") == null || session.getAttribute("adminCsrfToken") == null) {
             response.sendRedirect(request.getContextPath() + "/admin/login");
             return;
         }

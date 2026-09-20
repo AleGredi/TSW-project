@@ -27,19 +27,19 @@ public class AdminMunizioniServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("admin") == null) {
+        if (session == null || session.getAttribute("admin") == null || session.getAttribute("adminCsrfToken") == null) {
             response.sendRedirect(request.getContextPath() + "/admin/login");
             return;
         }
 
         List<Munizione> munizioni = munizioneDAO.findAll();
         request.setAttribute("munizioni", munizioni);
-        request.getRequestDispatcher("/WEB-INF/views/admin/munizioni.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/view/admin/munizioni.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("admin") == null) {
+        if (session == null || session.getAttribute("admin") == null || session.getAttribute("adminCsrfToken") == null) {
             response.sendRedirect(request.getContextPath() + "/admin/login");
             return;
         }

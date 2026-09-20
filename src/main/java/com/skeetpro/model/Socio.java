@@ -3,6 +3,7 @@ package com.skeetpro.model;
 import java.time.LocalDate;
 
 public class Socio extends Cliente {
+    private static final long serialVersionUID = 1L;
 
     private String numeroTessera;
     private LocalDate dataIscrizione;

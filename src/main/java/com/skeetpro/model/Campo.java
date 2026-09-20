@@ -1,6 +1,9 @@
 package com.skeetpro.model;
 
-public class Campo {
+import java.io.Serializable;
+
+public class Campo implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int id;
     private String disciplina;
 

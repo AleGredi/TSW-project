@@ -27,19 +27,19 @@ public class AdminArmiServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("admin") == null) {
+        if (session == null || session.getAttribute("admin") == null || session.getAttribute("adminCsrfToken") == null) {
             response.sendRedirect(request.getContextPath() + "/admin/login");
             return;
         }
 
         List<Arma> armi = armaDAO.findAll();
         request.setAttribute("armi", armi);
-        request.getRequestDispatcher("/WEB-INF/views/admin/armi.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/view/admin/armi.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("admin") == null) {
+        if (session == null || session.getAttribute("admin") == null || session.getAttribute("adminCsrfToken") == null) {
             response.sendRedirect(request.getContextPath() + "/admin/login");
             return;
         }

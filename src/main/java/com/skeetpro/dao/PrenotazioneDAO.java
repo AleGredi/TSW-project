@@ -11,5 +11,6 @@ public interface PrenotazioneDAO {
     List<Prenotazione> findByCliente(String clienteCf);
     
     java.util.List<com.skeetpro.model.PrenotazioneAdminDTO> findAllForAdmin();
+    java.util.List<com.skeetpro.model.PrenotazioneAdminDTO> findPrenotazioniFiltrate(String dataDa, String dataA, String cliente);
     void deleteByCodice(String codice);
 }

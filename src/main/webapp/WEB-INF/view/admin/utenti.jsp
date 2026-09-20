@@ -41,7 +41,7 @@
                 <c:remove var="successMsg" scope="session" />
             </c:if>
             <c:if test="${not empty sessionScope.errorMsg}">
-                <div class="custom-element-14">
+                <div class="alert-error">
                     ${sessionScope.errorMsg}
                 </div>
                 <c:remove var="errorMsg" scope="session" />
@@ -65,16 +65,16 @@
                         <c:forEach var="u" items="${utenti}">
                             <tr>
                                 <td><strong>${u.nome} ${u.cognome}</strong></td>
-                                <td class="text-monospace">${u.cf}</td>
+                                <td class="mono">${u.cf}</td>
                                 <td><a href="mailto:${u.email}">${u.email}</a></td>
                                 
                                 <td>
                                     <c:choose>
                                         <c:when test="${u.tipoCliente == 'Socio'}">
-                                            <span class="custom-element-48-highlight-text-2">Socio</span>
+                                            <span class="text-accent"><strong>Socio</strong></span>
                                         </c:when>
                                         <c:otherwise>
-                                            <span class="highlight-text-64">Temporaneo</span>
+                                            <span class="text-muted">Temporaneo</span>
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
@@ -83,19 +83,19 @@
                                     <c:if test="${u.tipoCliente == 'Socio'}">
                                         <c:choose>
                                             <c:when test="${u.statoSocio == 'Attivo'}">
-                                                <span class="custom-element-59 status-active">ATTIVO</span>
+                                                <span class="status-badge status-active">ATTIVO</span>
                                             </c:when>
                                             <c:when test="${u.statoSocio == 'Sospeso'}">
-                                                <span class="custom-element-59 status-suspended">SOSPESO</span>
+                                                <span class="status-badge status-suspended">SOSPESO</span>
                                             </c:when>
                                             <c:otherwise>
-                                                <span class="custom-element-59 status-expired">SCADUTO</span>
+                                                <span class="status-badge status-expired">SCADUTO</span>
                                             </c:otherwise>
                                         </c:choose>
-                                        <div class="fs-11-spacing-element-40">Tessera: ${u.nTessera}</div>
+                                        <div class="badge-subtext">Tessera: ${u.nTessera}</div>
                                     </c:if>
                                     <c:if test="${u.tipoCliente != 'Socio'}">
-                                        <span class="custom-element-59 status-temp">N/A</span>
+                                        <span class="status-badge status-temp">N/A</span>
                                     </c:if>
                                 </td>
                                 
@@ -103,37 +103,37 @@
                                     <c:if test="${u.tipoCliente == 'Socio'}">
                                         <c:if test="${not empty u.numLicenza}">
                                             <strong>${u.numLicenza}</strong> <br>
-                                            Scad: <span class="text-monospace">${u.scadenzaPortoArmiFormatted}</span>
+                                            Scad: <span class="mono">${u.scadenzaPortoArmiFormatted}</span>
                                             
                                             <c:if test="${u.portoArmiScaduto}">
-                                                <br><span class="alert-badge alert-danger spacing-element-66">! SCADUTO !</span>
+                                                <br><span class="alert-badge alert-danger">! SCADUTO !</span>
                                             </c:if>
                                             <c:if test="${u.portoArmiInScadenza}">
-                                                <br><span class="alert-badge alert-warning spacing-element-66">Scade tra meno di 30 gg</span>
+                                                <br><span class="alert-badge alert-warning">Scade tra meno di 30 gg</span>
                                             </c:if>
                                         </c:if>
                                         <c:if test="${empty u.numLicenza}">
-                                            <span class="highlight-text-71-d-block-spacing-element-20"><i>Nessuna licenza</i></span>
+                                            <span class="text-muted"><i>Nessuna licenza</i></span>
                                         </c:if>
                                         
-                                        <form action="${pageContext.request.contextPath}/admin/utenti" method="post" class="custom-element-68">
+                                        <form action="${pageContext.request.contextPath}/admin/utenti" method="post" class="license-form">
                                             <input type="hidden" name="action" value="aggiornaPortoArmi">
                                             <input type="hidden" name="cf" value="${u.cf}">
-                                            <input type="text" name="numLicenza" placeholder="N. Licenza" value="${u.numLicenza}" class="btn-custom-69" required>
-                                            <input type="date" name="scadenza" value="${u.scadenzaPortoArmi}" class="btn-custom-69" required>
-                                            <button type="submit" class="action-btn btn-custom-70">Salva/Aggiorna</button>
+                                            <input type="text" name="numLicenza" placeholder="N. Licenza" value="${u.numLicenza}" class="input-compact" required>
+                                            <input type="date" name="scadenza" value="${u.scadenzaPortoArmi}" class="input-compact" required>
+                                            <button type="submit" class="action-btn btn-save-compact">Salva/Aggiorna</button>
                                         </form>
                                     </c:if>
                                     <c:if test="${u.tipoCliente != 'Socio'}">
-                                        <span class="highlight-text-71"><i>Non applicabile</i></span>
+                                        <span class="text-muted"><i>Non applicabile</i></span>
                                     </c:if>
                                 </td>
                                 
-                                <td>
+                                 <td>
                                     <c:if test="${u.tipoCliente == 'Socio'}">
                                         <c:choose>
                                             <c:when test="${u.statoSocio == 'Attivo'}">
-                                                <form action="${pageContext.request.contextPath}/admin/utenti" method="post" class="form-inline-block">
+                                                <form action="${pageContext.request.contextPath}/admin/utenti" method="post" class="form-inline">
                                                     <input type="hidden" name="action" value="cambiaStato">
                                                     <input type="hidden" name="cf" value="${u.cf}">
                                                     <input type="hidden" name="stato" value="Sospeso">
@@ -141,7 +141,7 @@
                                                 </form>
                                             </c:when>
                                             <c:otherwise>
-                                                <form action="${pageContext.request.contextPath}/admin/utenti" method="post" class="form-inline-block">
+                                                <form action="${pageContext.request.contextPath}/admin/utenti" method="post" class="form-inline">
                                                     <input type="hidden" name="action" value="cambiaStato">
                                                     <input type="hidden" name="cf" value="${u.cf}">
                                                     <input type="hidden" name="stato" value="Attivo">

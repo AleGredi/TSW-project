@@ -1,6 +1,9 @@
 package com.skeetpro.model;
 
-public class RigaOrdine {
+import java.io.Serializable;
+
+public class RigaOrdine implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int ordineCodice;
     private String idProdotto;
     private String tipoProdotto;

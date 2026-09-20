@@ -135,4 +135,21 @@ public class ArmaDAOImpl implements ArmaDAO {
             throw new RuntimeException("Errore cambio stato Arma", e);
         }
     }
+
+    @Override
+    public byte[] getFoto(String matricola) {
+        String sql = "SELECT Foto FROM Arma WHERE Matricola = ?";
+        try (Connection conn = DataSourceProvider.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, matricola);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getBytes("Foto");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

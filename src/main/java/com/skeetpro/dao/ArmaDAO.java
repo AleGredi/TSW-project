@@ -10,4 +10,5 @@ public interface ArmaDAO {
     void update(Arma arma);
     void softDelete(String matricola);
     void riattiva(String matricola);
+    byte[] getFoto(String matricola);
 }

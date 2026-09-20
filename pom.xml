@@ -15,6 +15,14 @@
           <scope>provided</scope>
       </dependency>
       
+      <!-- Jakarta JSP API (Fornito da Tomcat 11) -->
+      <dependency>
+          <groupId>jakarta.servlet.jsp</groupId>
+          <artifactId>jakarta.servlet.jsp-api</artifactId>
+          <version>3.1.1</version>
+          <scope>provided</scope>
+      </dependency>
+      
       <!-- JSTL API -->
       <dependency>
           <groupId>jakarta.servlet.jsp.jstl</groupId>
@@ -42,7 +50,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.13.0</version>
         <configuration>
-          <release>25</release>
+          <release>21</release>
         </configuration>
       </plugin>
     </plugins>

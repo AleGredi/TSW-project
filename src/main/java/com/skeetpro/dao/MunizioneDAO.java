@@ -10,4 +10,5 @@ public interface MunizioneDAO {
     void update(Munizione munizione);
     void softDelete(String lotto);
     void riattiva(String lotto);
+    byte[] getFoto(String lotto);
 }

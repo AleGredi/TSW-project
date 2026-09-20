@@ -86,30 +86,63 @@ public class PrenotazioneDAOImpl implements PrenotazioneDAO {
     }
     @Override
     public java.util.List<com.skeetpro.model.PrenotazioneAdminDTO> findAllForAdmin() {
+        return findPrenotazioniFiltrate(null, null, null);
+    }
+
+    @Override
+    public java.util.List<com.skeetpro.model.PrenotazioneAdminDTO> findPrenotazioniFiltrate(String dataDa, String dataA, String cliente) {
         java.util.List<com.skeetpro.model.PrenotazioneAdminDTO> list = new ArrayList<>();
-        String sql = "SELECT p.Codice, p.Data, p.FasciaOraria, p.CampoID, c.Disciplina, " +
-                     "cl.CF, cl.Nome, cl.Cognome " +
-                     "FROM Prenotazione p " +
-                     "JOIN Campo c ON p.CampoID = c.ID " +
-                     "JOIN Cliente cl ON p.ClienteCF = cl.CF " +
-                     "ORDER BY p.Data DESC, p.FasciaOraria DESC";
-                     
+        StringBuilder sql = new StringBuilder(
+            "SELECT p.Codice, p.Data, p.FasciaOraria, p.CampoID, c.Disciplina, " +
+            "cl.CF, cl.Nome, cl.Cognome " +
+            "FROM Prenotazione p " +
+            "JOIN Campo c ON p.CampoID = c.ID " +
+            "JOIN Cliente cl ON p.ClienteCF = cl.CF " +
+            "WHERE 1=1 "
+        );
+
+        java.util.List<String> params = new ArrayList<>();
+        if (dataDa != null && !dataDa.trim().isEmpty()) {
+            sql.append("AND p.Data >= ? ");
+            params.add(dataDa.trim());
+        }
+        if (dataA != null && !dataA.trim().isEmpty()) {
+            sql.append("AND p.Data <= ? ");
+            params.add(dataA.trim());
+        }
+        if (cliente != null && !cliente.trim().isEmpty()) {
+            sql.append("AND (LOWER(cl.CF) LIKE ? OR LOWER(cl.Cognome) LIKE ? OR LOWER(cl.Nome) LIKE ? " +
+                       "OR LOWER(CONCAT(cl.Nome, ' ', cl.Cognome)) LIKE ? OR LOWER(CONCAT(cl.Cognome, ' ', cl.Nome)) LIKE ?) ");
+            String term = "%" + cliente.trim().replaceAll("\\s+", " ").toLowerCase() + "%";
+            params.add(term);
+            params.add(term);
+            params.add(term);
+            params.add(term);
+            params.add(term);
+        }
+
+        sql.append("ORDER BY p.Data DESC, p.FasciaOraria DESC");
+
         try (Connection con = DataSourceProvider.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-             
-            while (rs.next()) {
-                com.skeetpro.model.PrenotazioneAdminDTO dto = new com.skeetpro.model.PrenotazioneAdminDTO();
-                dto.setCodice(rs.getInt("Codice"));
-                dto.setData(rs.getDate("Data"));
-                dto.setFasciaOraria(rs.getTime("FasciaOraria"));
-                dto.setCampoId(rs.getInt("CampoID"));
-                dto.setDisciplina(rs.getString("Disciplina"));
-                dto.setClienteCF(rs.getString("CF"));
-                dto.setClienteNome(rs.getString("Nome"));
-                dto.setClienteCognome(rs.getString("Cognome"));
-                
-                list.add(dto);
+             PreparedStatement ps = con.prepareStatement(sql.toString())) {
+
+            for (int i = 0; i < params.size(); i++) {
+                ps.setString(i + 1, params.get(i));
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    com.skeetpro.model.PrenotazioneAdminDTO dto = new com.skeetpro.model.PrenotazioneAdminDTO();
+                    dto.setCodice(rs.getInt("Codice"));
+                    dto.setData(rs.getDate("Data"));
+                    dto.setFasciaOraria(rs.getTime("FasciaOraria"));
+                    dto.setCampoId(rs.getInt("CampoID"));
+                    dto.setDisciplina(rs.getString("Disciplina"));
+                    dto.setClienteCF(rs.getString("CF"));
+                    dto.setClienteNome(rs.getString("Nome"));
+                    dto.setClienteCognome(rs.getString("Cognome"));
+                    list.add(dto);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

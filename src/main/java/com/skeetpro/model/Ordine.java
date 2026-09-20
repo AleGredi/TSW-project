@@ -1,10 +1,12 @@
 package com.skeetpro.model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Ordine {
+public class Ordine implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int codice;
     private Timestamp data;
     private String stato;

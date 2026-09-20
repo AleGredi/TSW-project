@@ -30,7 +30,7 @@ public class AdminLoginServlet extends HttpServlet {
             return;
         }
         
-        request.getRequestDispatcher("/WEB-INF/views/admin/login.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/view/admin/login.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -50,11 +50,11 @@ public class AdminLoginServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/admin/utenti");
             } else {
                 request.setAttribute("errore", "Credenziali Admin non valide.");
-                request.getRequestDispatcher("/WEB-INF/views/admin/login.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/view/admin/login.jsp").forward(request, response);
             }
         } catch (Exception e) {
             request.setAttribute("errore", "Si è verificato un errore: " + e.getMessage());
-            request.getRequestDispatcher("/WEB-INF/views/admin/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/view/admin/login.jsp").forward(request, response);
         }
     }
 }
