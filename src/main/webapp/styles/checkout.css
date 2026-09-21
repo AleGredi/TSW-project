@@ -84,3 +84,24 @@
 .input-row .form-group {
     flex: 1;
 }
+
+@media (max-width: 768px) {
+    .checkout-wrapper {
+        margin: 20px auto;
+        padding: 0 15px;
+        gap: 20px;
+    }
+    
+    .checkout-col {
+        min-width: 100%;
+    }
+    
+    .checkout-box {
+        padding: 20px 15px;
+    }
+    
+    .input-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}

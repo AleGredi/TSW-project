@@ -29,9 +29,13 @@ public class RegistrazioneServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String cf = request.getParameter("cf");
+        if (cf != null) cf = cf.trim().toUpperCase();
         String nome = request.getParameter("nome");
+        if (nome != null) nome = nome.trim();
         String cognome = request.getParameter("cognome");
+        if (cognome != null) cognome = cognome.trim();
         String email = request.getParameter("email");
+        if (email != null) email = email.trim().toLowerCase();
         String password = request.getParameter("password");
         String tipoCliente = request.getParameter("tipoCliente");
 

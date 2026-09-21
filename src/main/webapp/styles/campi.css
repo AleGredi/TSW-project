@@ -35,3 +35,17 @@
     color: var(--color-muted);
     text-align: center;
 }
+
+@media (max-width: 768px) {
+    .booking-layout {
+        gap: 20px;
+    }
+    
+    .booking-col {
+        min-width: 100%;
+    }
+    
+    .booking-form {
+        padding: 20px 15px;
+    }
+}

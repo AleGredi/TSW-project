@@ -124,7 +124,7 @@
 
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
 }
 
@@ -229,40 +229,93 @@
 
 @media (max-width: 768px) {
     .hero {
-        padding: 100px 20px;
+        padding: 60px 15px 80px 15px;
     }
     
     .hero h1 {
-        font-size: 32px;
+        font-size: 26px;
+        line-height: 1.2;
+        margin-bottom: 15px;
+        word-break: break-word;
     }
     
     .hero p, .hero-subtitle {
-        font-size: 18px;
+        font-size: 16px;
+        line-height: 1.5;
         margin-bottom: 25px;
+        padding: 0 5px;
     }
     
     .hero-buttons {
         flex-direction: column;
+        gap: 12px;
+        align-items: center;
     }
     
     .btn-hero, .btn-hero-outline {
         width: 100%;
+        max-width: 280px;
         box-sizing: border-box;
+        padding: 13px 20px;
+        font-size: 14px;
     }
     
     .features-container {
-        margin-top: -40px;
+        margin: -40px auto 40px auto;
+        padding: 0 15px;
     }
     
     .features-grid {
         grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .feature-card {
+        padding: 25px 15px;
+    }
+
+    .feature-icon {
+        font-size: 45px;
+        width: 80px;
+        height: 80px;
+        line-height: 80px;
+        margin-bottom: 15px;
+    }
+
+    .feature-card h3 {
+        font-size: 20px;
+    }
+
+    .feature-card p {
+        font-size: 14px;
     }
     
+    .about-section {
+        padding: 50px 15px 60px 15px;
+        background-attachment: scroll;
+    }
+
     .about-section h2 {
-        font-size: 28px;
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .about-grid {
+        gap: 15px;
+        margin-top: 25px;
     }
     
     .feature-box {
         min-width: 100%;
+        width: 100%;
+        padding: 20px 15px;
+    }
+
+    .feature-box h4 {
+        font-size: 18px;
+    }
+
+    .feature-box p {
+        font-size: 14px;
     }
 }

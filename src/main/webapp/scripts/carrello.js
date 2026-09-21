@@ -22,6 +22,15 @@ function aggiungiAlCarrello(idProdotto, tipo, nome, prezzo, quantita, durata) {
     .then(data => {
         if (data.status === "success") {
             let counter = document.getElementById("cart-counter");
+            if (!counter) {
+                const cartLink = document.querySelector('a[href$="/carrello"]');
+                if (cartLink) {
+                    counter = document.createElement("span");
+                    counter.className = "cart-badge";
+                    counter.id = "cart-counter";
+                    cartLink.appendChild(counter);
+                }
+            }
             if (counter) {
                 counter.innerText = data.totaleArticoli;
             }

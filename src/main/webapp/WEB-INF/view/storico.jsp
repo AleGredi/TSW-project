@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Storico ${tipoStorico == 'noleggi' ? 'Noleggi' : 'Acquisti'} - SkeetPro</title>
+    <title>Storico ${tipoStorico == 'campi' ? 'Campi' : (tipoStorico == 'noleggi' ? 'Noleggi' : 'Acquisti')} - SkeetPro</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/main.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/storico.css">
 </head>

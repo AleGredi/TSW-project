@@ -40,7 +40,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function checkCarta() {
-        if (!/^\d{16}$/.test(numeroCarta.value.trim())) {
+        const cleaned = numeroCarta.value.replace(/\s+/g, '');
+        if (!/^\d{16}$/.test(cleaned)) {
             showError(numeroCarta, "Il numero di carta deve contenere 16 cifre.");
             return false;
         }

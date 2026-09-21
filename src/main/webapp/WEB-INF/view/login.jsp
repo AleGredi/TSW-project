@@ -24,6 +24,7 @@
             <div class="success-message">
                 ${successMessage}
             </div>
+            <c:remove var="successMessage" scope="session" />
         </c:if>
 
         <form action="${pageContext.request.contextPath}/login" method="post" id="loginForm">

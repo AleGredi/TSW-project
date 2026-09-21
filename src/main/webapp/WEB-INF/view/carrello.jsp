@@ -19,7 +19,7 @@
                 <div class="empty-cart">
                     <h2>Il tuo carrello è vuoto</h2>
                     <p>Sembra che tu non abbia ancora aggiunto nulla per la tua prossima sessione di tiro.</p>
-                    <a href="${pageContext.request.contextPath}/home" class="btn-outline">Scopri il Catalogo</a>
+                    <a href="${pageContext.request.contextPath}/catalogo" class="btn-outline">Scopri il Catalogo</a>
                 </div>
             </c:when>
             
